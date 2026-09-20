@@ -58,7 +58,6 @@
                     <targetTests>
                         <param>ar.edu.unrc.game2048.*Test</param>
                         <param>ar.edu.unrc.game2048.*Tests</param>
-                        <param>evosuite.*Test</param>
                     </targetTests>
                     <threads>1</threads>
                     <timestampedReports>false</timestampedReports>
