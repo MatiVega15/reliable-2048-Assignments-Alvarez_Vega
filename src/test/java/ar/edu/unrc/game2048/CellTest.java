@@ -39,7 +39,7 @@ public class CellTest {
         int valor = -1;
 
         // Act - Assert.
-        assertThrows (IllegalArgumentException.class, () -> {Cell celula = new Cell (valor);});
+        assertThrows (IllegalArgumentException.class, () -> {new Cell (valor);});
     }
 
     /**
@@ -93,6 +93,23 @@ public class CellTest {
         // Act - Assert.
         assertEquals(2, celda.getValue());
         assertTrue(celda.repOk());
+    }
+
+    /**
+     * Test para el método canMergeWith con parámetro nulo.
+     */
+    @Test
+    public void canMergeWithParametroNuloTest () {
+        // Arrange.
+        int valor = 0;
+        Cell celda1 = new Cell (valor);
+        Cell celda2 = null;
+
+        // Act.
+        IllegalArgumentException excepcion = assertThrows (IllegalArgumentException.class, () -> {celda1.canMergeWith (celda2);});
+    
+        // Assert.
+        assertEquals ("La celda dada no puede ser nula.", excepcion.getMessage ());
     }
 
     @Test
@@ -151,6 +168,22 @@ public class CellTest {
         assertFalse (resultado);
         assertTrue(celda1.repOk());
         assertTrue(celda2.repOk());
+    }
+
+    /**
+     * Test para el método mergeWith con parámetro nulo.
+     */
+    @Test
+    public void mergeWithParametroNuloTest () {
+        // Arrange.
+        Cell celda1 = new Cell (2);
+        Cell celda2 = null;
+
+        // Act.
+        IllegalArgumentException excepcion = assertThrows (IllegalArgumentException.class, () -> {celda1.mergeWith (celda2);});
+
+        // Assert.
+        assertEquals ("La celda dada no puede ser nula.", excepcion.getMessage ());
     }
 
     /**
@@ -303,7 +336,7 @@ public class CellTest {
         assertFalse(cell.repOk());
     }
 
-        @Test
+    @Test
     public void repOkFalsoPorSerNegativo() throws Exception {
         // Arrange
         Cell cell = new Cell(2);
@@ -315,6 +348,4 @@ public class CellTest {
         // Act - Assert
         assertFalse(cell.repOk());
     }
-
-
 }

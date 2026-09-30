@@ -53,7 +53,7 @@ public class BoardTest {
         int size = 0;
 
         // Act - Assert.
-        assertThrows (IllegalArgumentException.class, () -> {Board tablero = new Board (size);});
+        assertThrows (IllegalArgumentException.class, () -> {new Board (size);});
     }
 
     /**
@@ -72,6 +72,37 @@ public class BoardTest {
         assertTrue (tablero.repOk ());
     }
 
+    /**
+     * Test para el constructor de la clase Board con una estrategia nula.
+     */
+    @Test
+    public void constructorEstrategiaNulaTest () {
+        // Arrange.
+        int size = 10;
+        TileStrategy estrategia = null;
+
+        // Act.
+        IllegalArgumentException excepcion = assertThrows (IllegalArgumentException.class, () -> {new Board (size, estrategia);});
+
+        // Assert.
+        assertEquals ("La estrategia dada no puede ser nula.", excepcion.getMessage ());
+    }
+
+    /**
+     * Test para el constructor de la clase Board que copia un tablero nulo.
+     */
+    @Test
+    public void constructorCopiaTableroNuloTest () {
+        // Arrange.
+        Board tablero1 = null;
+
+        // Act.
+        IllegalArgumentException excepcion = assertThrows (IllegalArgumentException.class, () -> {new Board (tablero1);});
+
+        // Assert.
+        assertEquals ("El tablero dado no puede ser nulo.", excepcion.getMessage ());
+    }
+    
     /**
      * Test para el constructor de la clase Board que copia un tablero dado.
      */

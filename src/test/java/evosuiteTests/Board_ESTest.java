@@ -2660,9 +2660,9 @@ public class Board_ESTest extends Board_ESTest_scaffolding {
       Board board0 = null;
       try {
         board0 = new Board(2, (TileStrategy) null);
-        fail("Expecting exception: NullPointerException");
+        fail("Expecting exception: IllegalArgumentException");
       
-      } catch(NullPointerException e) {
+      } catch(IllegalArgumentException e) {
          //
          // no message in exception (getMessage() returned null)
          //
@@ -2889,9 +2889,9 @@ public class Board_ESTest extends Board_ESTest_scaffolding {
       Board board0 = null;
       try {
         board0 = new Board((Board) null);
-        fail("Expecting exception: NullPointerException");
+        fail("Expecting exception: IllegalArgumentException");
       
-      } catch(NullPointerException e) {
+      } catch(IllegalArgumentException e) {
          //
          // no message in exception (getMessage() returned null)
          //

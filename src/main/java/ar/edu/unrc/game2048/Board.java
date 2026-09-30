@@ -69,10 +69,14 @@ public class Board {
      * Creates a new board with a specific size and tile generation strategy.
      *
      * @param size the board size (must be > 0)
-     * @param strategy the tile generation strategy
-     * @throws IllegalArgumentException if size <= 0
+     * @param strategy the tile generation strategy (not null).
+     * @throws IllegalArgumentException if size <= 0 or strategy is null.
      */
     public Board (int size, TileStrategy strategy) {
+        if (strategy == null) {
+            throw new IllegalArgumentException ("La estrategia dada no puede ser nula.");
+        }
+        
         if (size <= 0) {
             throw new IllegalArgumentException ("Board size must be positive: " + size);
         }
@@ -88,9 +92,14 @@ public class Board {
     /**
      * Copy constructor - creates a deep copy of another board.
      *
-     * @param other the board to copy
+     * @param other the board to copy (not null).
+     * @throws IllegalArgumentException if other is null.
      */
     public Board(Board other) {
+        if (other == null) {
+            throw new IllegalArgumentException ("El tablero dado no puede ser nulo.");
+        }
+        
         this.size = other.size;
         this.grid = new Cell[size][size];
         this.score = other.score;

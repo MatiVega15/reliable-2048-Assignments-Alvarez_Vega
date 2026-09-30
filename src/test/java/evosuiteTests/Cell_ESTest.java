@@ -55,9 +55,9 @@ public class Cell_ESTest extends Cell_ESTest_scaffolding {
       // Undeclared exception!
       try { 
         cell0.mergeWith((Cell) null);
-        fail("Expecting exception: NullPointerException");
+        fail("Expecting exception: IllegalArgumentException");
       
-      } catch(NullPointerException e) {
+      } catch(IllegalArgumentException e) {
          //
          // no message in exception (getMessage() returned null)
          //
@@ -71,9 +71,9 @@ public class Cell_ESTest extends Cell_ESTest_scaffolding {
       // Undeclared exception!
       try { 
         cell0.canMergeWith((Cell) null);
-        fail("Expecting exception: NullPointerException");
+        fail("Expecting exception: IllegalArgumentException");
       
-      } catch(NullPointerException e) {
+      } catch(IllegalArgumentException e) {
          //
          // no message in exception (getMessage() returned null)
          //

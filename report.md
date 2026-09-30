@@ -377,6 +377,46 @@ Los resultados muestran que **la incorporación de `repOk ()` tuvo un impacto si
 
 En cambio, **la posterior incorporación de `@CheckRep` produjo una suite mucho más pequeña y, en esta ejecución concreta, métricas inferiores**. Esto no permite concluir que `@CheckRep` sea perjudicial en general, sino que muestra que **su efecto depende de las secuencias generadas y de la interacción entre los invariantes de representación y el proceso de exploración de Randoop**. De todas maneras, **ninguno de estos mecanismos reemplaza la necesidad de verificar el comportamiento funcional mediante aserciones y pruebas específicas**.
 
+## ***Fase 3.4: Chequeos de precondiciones***
+
+Con el objetivo de encontrar **problemas de robustez** en las implementaciones de las clases de interés, se agregaron algunos **parámetros adicionales** a la ejecución de Randoop con el objetivo de **detectar problemas de chequeos de precondición insuficientes**:
+
+```text
+--forbid-null=false --null-ratio=0.1 --npe-on-null-input=ERROR  --npe-on-non-null-input=ERROR
+```
+
+Estos parámetros permiten a Randoop **usar `NULL` como parámetro de métodos que toman objetos** y le indica que las **`NullPointerException` son consideradas errores**.
+
+Además, se agregó el **parámetro**:
+
+```text
+--no-regression-tests=true
+```
+
+De esta manera, Randoop **no almacena tests de regresión, sino solamente los tests fallidos**.
+
+Así, el **comando final** utilizado fue:
+
+```bash
+java -cp "lib/randoop-all-4.3.4.jar:target/classes" randoop.main.Main gentests --testclass=ar.edu.unrc.game2048.Cell --testclass=ar.edu.unrc.game2048.Board --testclass=ar.edu.unrc.game2048.DeterministicTileStrategy --omit-methods="ar.edu.unrc.game2048.Board\(\)" --omit-methods="ar.edu.unrc.game2048.Board\(int\)" --time-limit=30 --junit-output-dir=src/test/java --junit-package-name=randoopTestsChequeoPrecondiciones --forbid-null=false --null-ratio=0.1 --npe-on-null-input=ERROR  --npe-on-non-null-input=ERROR --no-regression-tests=true
+```
+
+Su ejecución dejó en la carpeta `randoopTestsChequeoPrecondiciones/` el archivo [ErrorTest0.java](src/test/java/randoopTestsChequeoPrecondiciones/ErrorTest0.java) con **5 tests que fallaron**.
+
+Analizando los tests generados, se detectaron los siguientes **problemas**:
+
+- **test1 ()**: dejó en evidencia que **el constructor `Board (Board)`de la clase `Board`** no presenta una implementación defensiva respecto de su precondición, permitiendo pasar como argumento un tablero nulo.
+- **test2 ()**: algo similar ocurre en la **clase `Cell`**, en donde los **métodos `canMergeWith (Cell)` y `mergeWith (Cell)`** no validan las celdas que reciben como parámetro. Además, analizando estas implementaciones, se detectó que `canMergeWith (Cell)` presenta un **error en su condición `this.isEmpty () && other.isEmpty ()`**. Para determinar que dos celdas no pueden fusionarse (`return false`), alcanza con que alguna de las dos sea vacía, por lo cual, **lo correcto es utilizar un OR (`||`) en lugar de un AND (`&&`)**.
+- **test3 (), test4 () y test5 ()**: demostraron que el otro **constructor de la clase `Board`, `Board (int, TileStrategy)`**, tampoco presenta una implementación defensiva, dejando pasar estrategias nulas como argumento.
+
+Todos estos defectos del código fueron detallados en una **Issue en Github** y fueron correctamente reparados.
+
+Cabe aclarar que, **algunos pocos tests previamente generados de forma automática debieron modificarse**, ya que en sus aserciones esperaban `NullPointerException`, y con la refactorización obtienen `IllegalArgumentException`.
+
+Por su parte, esta última clase de tests generada, `randoopTestsChequeoPrecondiciones/ErrorTest0.java` se conserva como documentación en el repositorio pero fue **anotada como `@Ignore`** debido a que su propósito ya fue cumplido y conservar los tests rompería la ejecución de comandos como `mvn test`.
+
+Además, **se agregaron algunos tests manuales** para recuperar el **100% de cobertura estructural y de mutación** luego de la refactorización mencionada.
+
 ---
 
 # **Assignment 3 (Automated Test Generation and Fuzzing)**
@@ -608,7 +648,7 @@ Es importante aclarar que los resultados corresponden a las ejecuciones realizad
 
 | Técnica | Cantidad de pruebas |
 |---|---:|
-| Pruebas manuales | 105 |
+| Pruebas manuales | 109 |
 | Randoop sin `repOk` | 45 |
 | Randoop con `repOk` | 523 |
 | Randoop con `repOk` + `@CheckRep` | 41 |

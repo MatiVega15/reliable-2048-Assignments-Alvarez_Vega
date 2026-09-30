@@ -79,6 +79,7 @@
                         <exclude>randoopTestsSinRepOk/RegressionTest.java</exclude>
                         <exclude>randoopTestsConRepOk/RegressionTest.java</exclude>
                         <exclude>randoopTestsConCheckRep/RegressionTest.java</exclude>
+                        <exclude>randoopTestsChequeoPrecondiciones/ErrorTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>

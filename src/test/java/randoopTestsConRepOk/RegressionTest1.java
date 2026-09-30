@@ -241,8 +241,8 @@ public class RegressionTest1 {
         // The following exception was thrown during execution in test generation
         try {
             ar.edu.unrc.game2048.Cell cell87 = cell12.mergeWith(cell86);
-            org.junit.Assert.fail("Expected exception of type java.lang.NullPointerException; message: Cannot read field \"value\" because \"other\" is null");
-        } catch (java.lang.NullPointerException e) {
+            org.junit.Assert.fail("Expected exception of type java.lang.IllegalArgumentException; message: Cannot read field \"value\" because \"other\" is null");
+        } catch (java.lang.IllegalArgumentException e) {
             // Expected exception.
         }
         org.junit.Assert.assertEquals("'" + str2 + "' != '" + "1" + "'", str2, "1");

@@ -65,8 +65,8 @@ public class RegressionTest0 {
         // The following exception was thrown during execution in test generation
         try {
             boolean boolean3 = cell1.canMergeWith(cell2);
-            org.junit.Assert.fail("Expected exception of type java.lang.NullPointerException; message: Cannot read field \"value\" because \"other\" is null");
-        } catch (java.lang.NullPointerException e) {
+            org.junit.Assert.fail("Expected exception of type java.lang.IllegalArgumentException; message: Cannot read field \"value\" because \"other\" is null");
+        } catch (java.lang.IllegalArgumentException e) {
             // Expected exception.
         }
     }
@@ -134,8 +134,8 @@ public class RegressionTest0 {
         // The following exception was thrown during execution in test generation
         try {
             ar.edu.unrc.game2048.Board board1 = new ar.edu.unrc.game2048.Board(board0);
-            org.junit.Assert.fail("Expected exception of type java.lang.NullPointerException; message: Cannot read field \"size\" because \"other\" is null");
-        } catch (java.lang.NullPointerException e) {
+            org.junit.Assert.fail("Expected exception of type java.lang.IllegalArgumentException; message: Cannot read field \"size\" because \"other\" is null");
+        } catch (java.lang.IllegalArgumentException e) {
             // Expected exception.
         }
     }
@@ -3430,8 +3430,8 @@ public class RegressionTest0 {
         // The following exception was thrown during execution in test generation
         try {
             ar.edu.unrc.game2048.Cell cell57 = cell14.mergeWith(cell56);
-            org.junit.Assert.fail("Expected exception of type java.lang.NullPointerException; message: Cannot read field \"value\" because \"other\" is null");
-        } catch (java.lang.NullPointerException e) {
+            org.junit.Assert.fail("Expected exception of type java.lang.IllegalArgumentException; message: Cannot read field \"value\" because \"other\" is null");
+        } catch (java.lang.IllegalArgumentException e) {
             // Expected exception.
         }
         org.junit.Assert.assertEquals("'" + str4 + "' != '" + "1" + "'", str4, "1");

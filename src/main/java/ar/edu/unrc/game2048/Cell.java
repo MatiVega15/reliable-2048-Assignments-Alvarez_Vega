@@ -77,11 +77,16 @@ public final class Cell {
      * Checks if this cell can merge with another cell.
      * Two cells can merge if they are both non-empty and have the same value.
      * 
-     * @param other the other cell to check merge compatibility with
+     * @param other the other cell to check merge compatibility with (not null).
      * @return true if the cells can merge, false otherwise
+     * @throws IllegalArgumentException if other is null.
      */
     public boolean canMergeWith(Cell other) {
-        if (this.isEmpty() && other.isEmpty()) {
+        if (other == null) {
+            throw new IllegalArgumentException ("La celda dada no puede ser nula.");
+        }
+        
+        if (this.isEmpty() || other.isEmpty()) {
             return false;
         }
         return this.value == other.value;
@@ -91,11 +96,15 @@ public final class Cell {
      * Creates a new cell that is the result of merging this cell with another.
      * The resulting cell has double the value.
      * 
-     * @param other the cell to merge with (must have the same value)
+     * @param other the cell to merge with (must have the same value, not null).
      * @return a new Cell with the merged value
-     * @throws IllegalArgumentException if the cells cannot be merged
+     * @throws IllegalArgumentException if the cells cannot be merged or it's null.
      */
     public Cell mergeWith(Cell other) {
+        if (other == null) {
+            throw new IllegalArgumentException ("La celda dada no puede ser nula.");
+        }
+        
         if (!canMergeWith(other)) {
             throw new IllegalArgumentException(
                 "Cannot merge cells: " + this + " and " + other
