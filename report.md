@@ -542,6 +542,8 @@ Por lo tanto, las pruebas generadas resultan útiles como mecanismo complementar
 
 ## ***Fase 1.3: Medición de cobertura de las pruebas generadas***
 
+### ***Cobertura estructural de EvoSuite (JaCoCo)***
+
 Para evaluar la **cobertura estructural** de las suites generadas por EvoSuite, se aisló la ejecución de **JaCoCo** para dichos tests:
 
 ```bash
@@ -550,7 +552,7 @@ mvn clean test jacoco:report "-Dtest=evosuiteTests.*ESTest"
 
 La ejecución correspondió exclusivamente a las pruebas generadas por EvoSuite para `Cell`, `Board` y `DeterministicTileStrategy`.
 
-### ***Resultados generales para las clases de interés***
+#### ***Resultados generales para las clases de interés***
 
 | Clase | Instrucciones | Ramas | Líneas | Complejidad | Métodos |
 |---|---:|---:|---:|---:|---:|
@@ -562,7 +564,7 @@ La ejecución correspondió exclusivamente a las pruebas generadas por EvoSuite 
 
 Considerando conjuntamente `Cell`, `Board`, `Board.Position` y `DeterministicTileStrategy`, EvoSuite alcanzó **1206 de 1272 instrucciones**, aproximadamente un **95% de cobertura de instrucciones**, y **168 de 180 ramas**, aproximadamente un **93% de cobertura de ramas**.
 
-### ***Cobertura específica para `Cell`***
+#### ***Cobertura específica para `Cell`***
 
 | Método | Cobertura de instrucciones | Cobertura de ramas |
 |---|---:|---:|
@@ -581,7 +583,7 @@ La clase `Cell` alcanzó un **99% de cobertura de instrucciones** y un **94% de 
 
 Esto muestra que EvoSuite logró explorar prácticamente toda la funcionalidad de `Cell`. La cobertura que no se alcanzó corresponde principalmente a caminos específicos de validación del invariante de representación, lo cual resulta razonable ya que **alcanzar ciertas condiciones internas inválidas de una `Cell` no es necesariamente sencillo utilizando únicamente su interfaz pública, sin recurrir a estrategias como reflexión**.
 
-### ***Cobertura específica para `Board`***
+#### ***Cobertura específica para `Board`***
 
 | Método | Cobertura de instrucciones | Cobertura de ramas |
 |---|---:|---:|
@@ -620,7 +622,7 @@ También quedaron algunos caminos sin cubrir en `isLosingBoard ()`, `repOk ()`, 
 
 En contraste, las operaciones principales de movimiento junto con los demás métodos indispensables alcanzaron el **100% de cobertura de instrucciones y ramas**. Esto indica que la búsqueda evolutiva consiguió explorar una parte importante de la lógica central del juego.
 
-### ***Cobertura específica para `DeterministicTileStrategy`***
+#### ***Cobertura específica para `DeterministicTileStrategy`***
 
 | Método | Cobertura de instrucciones | Cobertura de ramas |
 |---|---:|---:|
@@ -630,7 +632,7 @@ En contraste, las operaciones principales de movimiento junto con los demás mé
 
 La clase `DeterministicTileStrategy` alcanzó **%100 de cobertura de instrucciones, ramas, líneas, complejidad y métodos**.
 
-### ***Análisis de resultados***
+#### ***Análisis de resultados***
 
 Los resultados muestran que **EvoSuite consiguió una cobertura estructural elevada con una cantidad relativamente pequeña de pruebas**: 33 tests para `Board`, 25 para `Cell` y 7 para `DeterministicTileStrategy`.
 
@@ -638,9 +640,39 @@ Los resultados muestran que **EvoSuite consiguió una cobertura estructural elev
 
 Un aspecto relevante es que **la cobertura de código no implica necesariamente que todos los comportamientos funcionales hayan sido verificados correctamente**. Por este motivo, **las métricas de JaCoCo deben analizarse conjuntamente** con la calidad de las aserciones generadas y con los resultados obtenidos mediante las otras técnicas de testing.
 
+### ***Cobertura de mutación de EvoSuite (PITest)***
+
+Para evaluar la **cobertura de mutación** de las suites generadas por EvoSuite, se aisló la ejecución de **PITest** para dichos tests utilizando el comando configurado:
+
+```bash
+mvn pitest:mutationCoverage "-DtargetTests=evosuiteTests.*ESTest" -Pevosuite
+```
+
+La ejecución evaluó la efectividad de las pruebas automáticas inyectando mutantes en el código fuente de `Cell`, `Board` y `DeterministicTileStrategy`.
+
+#### ***Resultados generales para las clases de interés***
+
+| Name | Line Coverage | Mutation Coverage | Test Strength |
+|---|---:|---:|---:|
+| Cell.java | 100% (28/28) | 94% (33/35) | 94% (33/35) |
+| Board.java | 92% (195/212) | 82% (140/170) | 91% (140/154) |
+| DeterministicTileStrategy.java | 100% (13/13) | 88% (7/8) | 88% (7/8) |
+
+#### ***Análisis de resultados***
+
+Los resultados de PITest demuestran que las suites generadas por EvoSuite no solo alcanzan una alta cobertura estructural, sino que también poseen una **excelente capacidad para detectar fallos (matar mutantes)**:
+
+- `Cell`: presentó un rendimiento sobresaliente, alcanzando una **cobertura de mutación del 94%**. Esto refuerza el hallazgo de JaCoCo, demostrando que la suite es altamente robusta para esta clase.
+- `Board`: alcanzó una **cobertura de mutación del 82% (con un *Test Strength* del 91% sobre el código cubierto)**. Considerando la complejidad y la cantidad de lógica de negocio que encapsula el tablero del juego 2048, este porcentaje evidencia que las aserciones automáticas de EvoSuite fueron eficaces desafiando las condiciones lógicas de los movimientos y estados.
+- `DeterministicTileStrategy`: obtuvo un **88% de cobertura de mutación**, validando de forma contundente la estrategia determinista para la colocación de fichas.
+
+### ***Conclusión conjunta***
+
+El análisis combinado de **JaCoCo y PITest** confirma que EvoSuite es una **herramienta sumamente potente para automatizar la generación de pruebas en dominios lógicos acotados**. Si bien la cobertura de mutación es ligeramente menor que la cobertura estructural (lo cual es esperado, ya que ejecutar una línea no garantiza que exista una aserción capaz de detectar cualquier alteración sutil en ella), los porcentajes obtenidos validan que **las pruebas automáticas complementan de forma muy sólida el trabajo de testing manual**.
+
 ## ***Fase 1.4: Comparación EvoSuite vs Randoop vs pruebas manuales***
 
-En esta fase se comparan las pruebas manuales, Randoop en sus distintas configuraciones y EvoSuite. **La comparación considera la cobertura estructural obtenida con JaCoCo**.
+En esta fase se comparan las pruebas manuales, Randoop en sus distintas configuraciones y EvoSuite. **La comparación considera tanto la cobertura estructural obtenida con JaCoCo como la efectividad de detección de fallos evaluada mediante cobertura de mutación con PITest**.
 
 Es importante aclarar que los resultados corresponden a las ejecuciones realizadas durante las distintas fases del proyecto. El código fue evolucionando entre ellas, especialmente con la incorporación de `repOk ()`, por lo que **los porcentajes permiten observar diferencias entre las técnicas pero no constituyen una comparación estrictamente controlada sobre exactamente la misma versión del código**.
 
@@ -656,27 +688,27 @@ Es importante aclarar que los resultados corresponden a las ejecuciones realizad
 
 El número de pruebas generadas por **Randoop** cambia considerablemente según la configuración. **EvoSuite** se caracteriza por minimizar el tamaño de sus suites, sin perder cobertura. Las **pruebas manuales** se fueron agregando progresivamente hasta conseguir la totalidad de la cobertura.
 
-### ***Cobertura estructural***
+### ***Cobertura estructural y de mutación***
 
-| Técnica | Clase | Instrucciones | Ramas |
-|---|---|---:|---:|
-| Manual | `Cell` | 100% | 100% |
-| Manual | `Board` | 100% | 100% |
-| Manual | `DeterministicTileStrategy` | 100% | 100% |
-| Randoop sin `repOk` | `Cell` | 74% | 68% |
-| Randoop sin `repOk` | `Board` | 88% | 79% |
-| Randoop sin `repOk` | `DeterministicTileStrategy` | 96% | 90% |
-| Randoop con `repOk` | `Cell` | 91% | 91% |
-| Randoop con `repOk` | `Board` | 76% | 73% |
-| Randoop con `repOk` | `DeterministicTileStrategy` | 96% | 90% |
-| Randoop con `repOk` + `@CheckRep` | `Cell` | 58% | 47% |
-| Randoop con `repOk` + `@CheckRep` | `Board` | 76% | 61% |
-| Randoop con `repOk` + `@CheckRep` | `DeterministicTileStrategy` | 89% | 80% |
-| EvoSuite | `Cell` | 99% | 94% |
-| EvoSuite | `Board` | 93% | 86% |
-| EvoSuite | `DeterministicTileStrategy` | 100% | 100% |
+| Técnica | Clase | Instrucciones | Ramas | Mutación
+|---|---|---:|---:| ---: |
+| Manual | `Cell` | 100% | 100% | 100% |
+| Manual | `Board` | 100% | 100% | 100% |
+| Manual | `DeterministicTileStrategy` | 100% | 100% | 100% |
+| Randoop sin `repOk` | `Cell` | 74% | 68% | 64% |
+| Randoop sin `repOk` | `Board` | 88% | 79% | 63% |
+| Randoop sin `repOk` | `DeterministicTileStrategy` | 96% | 90% | 38% |
+| Randoop con `repOk` | `Cell` | 91% | 91% | 91% |
+| Randoop con `repOk` | `Board` | 76% | 73% | 69% |
+| Randoop con `repOk` | `DeterministicTileStrategy` | 96% | 90% | 88% |
+| Randoop con `repOk` + `@CheckRep` | `Cell` | 58% | 47% | 52% |
+| Randoop con `repOk` + `@CheckRep` | `Board` | 76% | 61% | 49% |
+| Randoop con `repOk` + `@CheckRep` | `DeterministicTileStrategy` | 89% | 80% | 38% |
+| EvoSuite | `Cell` | 99% | 94% | 94% |
+| EvoSuite | `Board` | 93% | 86% | 82% |
+| EvoSuite | `DeterministicTileStrategy` | 100% | 100% | 88% |
 
-Los resultados muestran que las **pruebas manuales** alcanzaron la cobertura estructural completa en las clases principales durante las fases anteriores. **Randoop** alcanzó distintos niveles de cobertura dependiendo de la utilización de `repOk ()` y `@CheckRep`. En la ejecución de **EvoSuite**, `Cell`, `Board` y `DeterministicTileStrategy` alcanzaron coberturas elevadas, aunque `Board` mantuvo algunas ramas y líneas sin cubrir.
+Los resultados muestran que las **pruebas manuales** alcanzaron la cobertura estructural y de mutación completa en las clases principales durante las fases anteriores. **Randoop** alcanzó distintos niveles de cobertura dependiendo de la utilización de `repOk ()` y `@CheckRep`. En la ejecución de **EvoSuite**, `Cell`, `Board` y `DeterministicTileStrategy` alcanzaron coberturas estructurales y de mutación muy elevadas, demostrando una sólida efectividad en la eliminación de mutantes.
 
 ### ***Análisis de las pruebas manuales***
 
@@ -696,7 +728,7 @@ Si bien agiliza el esfuerzo requerido en las pruebas manuales, **sus tests son m
 
 EvoSuite utiliza **algoritmos genéticos para maximizar la cobertura de código, minimizando el tamaño de la suite**. Las pruebas generadas utilizan aserciones de regresión para comprobar que el comportamiento observado durante la generación se mantenga al ejecutar posteriormente las pruebas.
 
-Al igual que Randoop, agiliza la generación manual de tests. Sin embargo, durante la inspección de las pruebas se encontraron algunos aspectos que requieren revisión humana. Si bien sus suites son mucho más legibles que Randoop, **algunas secuencias generadas son largas y difíciles de interpretar, y aparecen valores poco naturales para el usuario**.
+Al igual que Randoop, agiliza la generación manual de tests. Su nivel de legibilidad es superior al de Randoop, y mediante la integración de PITest se pudo comprobar que sus suites poseen una **alta capacidad de matar mutantes**. No obstante, **algunas secuencias generadas son largas y difíciles de interpretar, y aparecen valores poco naturales para el usuario**.
 
 ### ***Comparación general***
 
@@ -715,7 +747,7 @@ Al igual que Randoop, agiliza la generación manual de tests. Sin embargo, duran
 
 Las tres técnicas tienen como objetivo **detectar errores y aumentar la confianza en el comportamiento del programa**.
 
-Las pruebas manuales, Randoop y EvoSuite pueden utilizarse junto con JaCoCo para **medir qué partes del código son ejercitadas por las pruebas**. Además, las tres requieren una **revisión de los resultados**, ya que una prueba que ejecuta una parte del código no necesariamente representa un caso funcional relevante.
+Las pruebas manuales, Randoop y EvoSuite pueden utilizarse junto con JaCoCo y PITest para **medir qué partes del código son ejercitadas por las pruebas y qué tan efectivas son las aserciones**. Además, las tres requieren una **revisión de los resultados**, ya que una prueba que ejecuta una parte del código no necesariamente representa un caso funcional relevante.
 
 Randoop y EvoSuite comparten la característica de **generar automáticamente** las pruebas, mientras que las pruebas manuales dependen directamente del **conocimiento y las decisiones del desarrollador**.
 
@@ -762,20 +794,20 @@ Otra diferencia importante es el **control sobre los casos generados**. Las prue
 
 - Genera automáticamente casos de prueba orientados a objetivos de **cobertura mediante búsqueda evolutiva**.
 - Puede generar automáticamente **aserciones de regresión**.
-- En poco tiempo, es capaz de obtener **suites con alta cobertura de código y relativamente pocas pruebas**.
+- En poco tiempo, es capaz de obtener **suites con alta cobertura de código y de mutación, con relativamente pocas pruebas**.
 
 #### ***Debilidades de EvoSuite***
 
 - Algunas pruebas generadas son **largas y difíciles de interpretar**.
 - Puede generar **valores y secuencias poco naturales** desde el punto de vista de un usuario.
 - **Las pruebas generadas requieren revisión** para determinar si representan escenarios funcionalmente relevantes.
-- Se presentó **dificultades para evaluar mutación con PIT** sobre las suites generadas con EvoSuite.
+- Presenta **desafíos técnicos de configuración y aislamiento en entornos específicos** (como WSL) al ser evaluadas con herramientas de mutación como PITest.
 
 ### ***Reflexión final***
 
-En términos de **cobertura de código**, para este programa, las **pruebas manuales** fueron las que permitieron expresar con mayor precisión los comportamientos esperados, logrando analizar la totalidad de las implementaciones.
+En términos de **cobertura de código y mutación**, para este programa, las **pruebas manuales** fueron las que permitieron expresar con mayor precisión los comportamientos esperados, logrando analizar la totalidad de las implementaciones.
 
-Sin embargo, se destaca también en un segundo escalón la gran capacidad de **EvoSuite** para ampliar la cobertura de manera automática con una cantidad relativamente reducida de pruebas, alcanzando una cobertura elevada en las clases analizadas. En contraparte, no fue posible evaluar las suites de EvoSuite con PIT.
+Sin embargo, se destaca también en un segundo escalón la gran capacidad de **EvoSuite** para ampliar la cobertura estructural y de mutación de manera automática con una cantidad relativamente reducida de pruebas, alcanzando resultados muy sólidos en las clases analizadas tras resolver las configuraciones de aislamiento.
 
 Por su parte, **Randoop** también fue de gran utilidad para explorar distintas secuencias de operaciones y analizar el efecto de los invariantes de representación, aunque generó demasiadas pruebas sin una gran mejoría de cobertura y además, algunas secuencias generadas pueden resultar costosas de ejecutar debido a la cantidad de operaciones que contienen.
 

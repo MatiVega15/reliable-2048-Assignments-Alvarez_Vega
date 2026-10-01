@@ -20,6 +20,7 @@
 
     <build>
         <plugins>
+            <!-- Jacoco -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -40,33 +41,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>1.15.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.pitest</groupId>
-                        <artifactId>pitest-junit5-plugin</artifactId>
-                        <version>1.2.0</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <targetClasses>
-                        <param>ar.edu.unrc.game2048.*</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>ar.edu.unrc.game2048.*Test</param>
-                        <param>ar.edu.unrc.game2048.*Tests</param>
-                    </targetTests>
-                    <threads>1</threads>
-                    <timestampedReports>false</timestampedReports>
-                    <outputFormats>
-                        <format>HTML</format>
-                        <format>XML</format>
-                    </outputFormats>
-                </configuration>
-            </plugin>
+            <!-- Surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -83,6 +58,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!-- EvoSuite -->
             <plugin>
                 <groupId>org.evosuite.plugins</groupId>
                 <artifactId>evosuite-maven-plugin</artifactId>
@@ -129,7 +105,6 @@
             <version>${evosuiteVersion}</version>
             <scope>test</scope>
         </dependency>
-
         <!-- JUnit Vintage for running JUnit 4 tests -->
         <dependency>
             <groupId>org.junit.vintage</groupId>
@@ -139,4 +114,74 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <!-- Perfil 1: Tests manuales y Randoop (se activa solo) -->
+        <profile>
+            <id>default-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>1.15.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.pitest</groupId>
+                                <artifactId>pitest-junit5-plugin</artifactId>
+                                <version>1.2.0</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <targetClasses>
+                                <param>ar.edu.unrc.game2048.*</param>
+                            </targetClasses>
+                            <targetTests>
+                                <param>ar.edu.unrc.game2048.*Test</param>
+                                <param>ar.edu.unrc.game2048.*Tests</param>
+                            </targetTests>
+                            <threads>1</threads>
+                            <timestampedReports>false</timestampedReports>
+                            <outputFormats>
+                                <format>HTML</format>
+                                <format>XML</format>
+                            </outputFormats>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Perfil 2: Exclusivo EvoSuite (100% aislado, sin JUnit 5) -->
+        <profile>
+            <id>evosuite</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>1.15.0</version>
+                        <configuration>
+                            <targetClasses>
+                                <param>ar.edu.unrc.game2048.*</param>
+                            </targetClasses>
+                            <useClasspathJar>false</useClasspathJar>
+                            <jvmArgs>
+                                <param>-Xmx2048M</param>
+                                <param>-Djava.awt.headless=true</param>
+                            </jvmArgs>
+                            <threads>1</threads>
+                            <timestampedReports>false</timestampedReports>
+                            <outputFormats>
+                                <format>HTML</format>
+                                <format>XML</format>
+                            </outputFormats>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
