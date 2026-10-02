@@ -812,3 +812,106 @@ Sin embargo, se destaca también en un segundo escalón la gran capacidad de **E
 Por su parte, **Randoop** también fue de gran utilidad para explorar distintas secuencias de operaciones y analizar el efecto de los invariantes de representación, aunque generó demasiadas pruebas sin una gran mejoría de cobertura y además, algunas secuencias generadas pueden resultar costosas de ejecutar debido a la cantidad de operaciones que contienen.
 
 Así, la experiencia muestra que no existe una única técnica suficiente por sí sola. **La combinación de las pruebas permite obtener una exploración más amplia y complementaria del comportamiento del sistema**.
+
+## ***Fase 2.1: Comprensión del Fuzzer base***
+
+Para esta fase se analizó el script `fuzzer.py` proporcionado. El script implementa un **fuzzer dinámico que interactúa con el programa ensamblado** a través de su interfaz externa (la línea de comandos), inyectando secuencias de entradas generadas aleatoriamente para detectar caídas, bloqueos o violaciones de invariantes.
+
+La **arquitectura del script** sigue la estructura teórica propuesta en *The Fuzzing Book*, dividiendo la herramienta en dos componentes principales:
+
+1. **El Runner (`CLIRunner`)**: Es el componente encargado de **envolver y ejecutar el programa Java (`MainCLI`) como un subproceso**. Toma la cadena de texto generada por el fuzzer, la inyecta a través de la entrada estándar (`stdin`) y monitorea la ejecución (con un tiempo límite de 10 segundos). Finalmente, se evalúa el código de salida y la salida de error (`stderr`) para clasificar la prueba como `PASS` (éxito), `FAIL` (fallo o error) o `UNRESOLVED` (tiempo agotado o error del propio runner).
+
+2. **El Fuzzer (`RandomFuzzer`)**: Es la clase base responsable de **generar la "basura" o los datos aleatorios** que servirán de entrada para estresar el programa.
+
+## ***Fase 2.2: Implementación del generador de entradas (`fuzz ()`)***
+
+La tarea principal de desarrollo consistió en **implementar el cuerpo del método `fuzz ()` dentro de la case `RandomFuzzer`**. Este método debía retornar un único *string* formateado correctamente para simular las secuencias de movimientos en la terminal.
+
+Para su **diseño e implementación**, se analizaron las consideraciones planteadas en la consigna, definiendo el siguiente comportamiento:
+
+1. **Longitud de la secuencia**: se determinó que la cantidad de movimientos **debe ser aleatoria** para cada prueba. Esto permite estresar el programa evaluando tanto partidas cortas como estados de juego más profundos. Para ello, se genera un número entero aleatorio acotado por los límites `min_length` (10) y `max_length` (50) definidos en la clase.
+2. **Probabilidad de las teclas**: se optó por una **distribución equiprobable** al seleccionar los movimientos. Mediante un bucle, se elige aleatoriamente una tecla del conjunto válido (`KEYS = ['a', 's', 'w', 'd']`), otorgando a cada dirección la misma probabilidad de ocurrencia (25%).
+3. **Formateo y cierre controlado**: cada tecla seleccionada se concatena en la cadena de texto seguida de un **salto de línea (`\n`)**, simulando la pulsación de *Enter*. Finalmente, para garantizar que el proceso termine de forma segura y no quede en ejecución permanente, se añade incondicionalmente el **comando de salida** (`QUIT = 'q'`) con su respectivo salto de línea al final de la cadena.
+
+*La implementación puede consultarse en el archivo [fuzzer.py](fuzzer.py).*
+
+## ***Fase 2.3: Ejecución inicial del Fuzzer***
+
+Una vez implementado el método de generación, se procedió a **ejecutar el script sobre el proyecto previamente compilado**. Para mantener un registro de la prueba y poder incluir la evidencia en los *commits* del repositorio, se redirigió la salida estándar hacia un archivo de texto ejecutando el comando:
+
+```bash
+python3 fuzzer.py > fuzzer_report_sin_repOk.txt
+```
+
+*Dicho archivo puede revisarse en [fuzzer_report_sin_repOk.txt](fuzzer_report_sin_repOk.txt).*
+
+### ***Análisis de los resultados y entradas generadas***
+
+El reporte generado documenta la ejecución completa de **20 partidas automáticas**. Al analizar los inputs inyectados por el script, se corroboró el **correcto funcionamiento** de la implementación de `fuzz ()`. Cada prueba recibió una **cadena de texto** compuesta aleatoriamente por los comandos de dirección (`a`, `s`, `w`, `d`) con longitudes dinámicas, cerrando incondicionalmente con la tecla `q`.
+
+Estas entradas permitieron **simular el avance del juego**, provocando movimientos en el tablero, fusiones de fichas y la suma de diferentes puntajes finales, dependiendo del éxito aleatorio de la secuencia.
+
+Ante la interrogante de si el programa experimentó caídas (*crashes*), **la respuesta es negativa**. A lo largo de las 20 pruebas, el juego procesó todos los comandos, ignoró correctamente los movimientos que no alteraban el tablero (imprimiendo *"No tiles moved. Try a different direction."*), y finalizó cada ejecución de manera limpia al leer la instrucción `q`, imprimiendo *"Thanks for playing!"*.
+
+Todas las ejecuciones retornaron un código de estado del sistema operativo impecable (`Exit : 0`) y no se registraron volcados de errores en la salida estándar de error (`stderr`). En consecuencia, el fuzzer clasificó la totalidad de los intentos como exitosos:
+
+- ***PASS***: 20/20.
+- ***FAIL***: 0/20.
+- ***UNRESOLVED***: 0/20.
+
+### ***Conclusión de la ejecución inicial***
+
+Esta primera iteración de *fuzzing* permitió comprobar que, para las 20 secuencias generadas, **la aplicación manejó correctamente el flujo de entrada de datos y finalizó cada ejecución sin errores de proceso**. No existen bloqueos, bucles infinitos ni excepciones a nivel de la máquina virtual que interrumpan el juego de forma catastrófica.
+
+Sin embargo, como el oráculo del fuzzer base se limita exclusivamente a monitorear caídas severas del proceso (códigos de salida distintos a cero), **los posibles errores de lógica profunda o corrupción silenciosa del tablero pueden haber pasado completamente desapercibidos**. Esto fundamenta la necesidad de acoplar la herramienta con los métodos `repOk ()`, lo cual se aborda en la siguiente fase.
+
+## ***Fase 2.4: Mejora en la detección de errores***
+
+Con el fin de poder contemplar también posibles errores en la lógica del juego, se habilitó la **bandera de aserciones (`-ea`)** en la máquina virtual de Java.
+
+Además, se integraron **2 validaciones de `Board.repOk ()`** en [mainCLI.java](src/main/java/ar/edu/unrc/game2048/MainCLI.java): una apenas comienza el juego, para verificar su correcta inicialización, y otra luego de cada movimiento ejecutado, para corroborar que no se corrompe el estado del juego.
+
+Cabe aclarar que, **implícitamente**, también se está utilizando `Cell.repOk ()`, en la implementación de  `Board.repOk ()`.
+
+El Fuzzer se **ejecutó** nuevamente redirigiendo la salida:
+
+```bash
+python3 fuzzer.py > fuzzer_report_con_repOk.txt
+```
+
+*Dicho archivo puede revisarse en [fuzzer_report_con_repOk.txt](fuzzer_report_con_repOk.txt).*
+
+### ***Análisis de los resultados y comportamiento del motor***
+
+Luego de realizar las 20 pruebas automatizadas inyectando secuencias caóticas de comandos direccionales, el reporte refleja los siguientes **datos cuantitativos**:
+
+- ***Total de intentos ejecutados***: 20 pruebas de *fuzzing*.
+- ***Pruebas Exitosas (PASS)***: 20/20.
+- ***Pruebas Fallidas (FAIL)***: 0/20.
+- ***Casos No Resueltos (UNRESOLVED)***: 0/20.
+
+De esta manera, logró demostrarse una **alta robustez** por parte de la aplicación ante entradas externas. Todas las pruebas fueron exitosas, registrando 0 fallos de proceso y 0 violaciones de aserciones.
+
+Esto no implica necesariamente que no existan errores en el programa, sino que **ninguno de los casos generados activó una condición detectada por el oráculo utilizado**.
+
+Las **secuencias de comandos** forzaron múltiples movimientos consecutivos contra bordes bloqueados y cadenas complejas de fusiones de celdas. Además, las partidas cubrieron un rango diverso de puntajes finales acuerdo con las acciones aleatorias del Fuzzer.
+
+### ***Conclusión de la fase***
+
+La ausencia de fallos indica que, durante las 20 ejecuciones, las llamadas a `board.repOk ()` **no arrojaron un valor falso en ninguno de los turnos auditados**. Esto permite afirmar que, para las entradas generadas, se mantuvieron las invariantes verificadas por:
+
+1. La matriz del tablero mantiene sus **dimensiones correctas** y **no presenta referencias nulas**.
+2. Los valores de las celdas se mantienen estrictamente dentro del **dominio válido del juego** (celdas vacías o potencias de dos).
+3. Los estados del juego **no sufren corrupciones silenciosas** tras procesar movimientos válidos o inválidos.
+
+## ***Fase 2.5: Reflexiones finales***
+
+El **Fuzzer de comandos (CLI)** es una técnica ligera y directa para aplicaciones interactivas en consola. Al interactuar enviando secuencias de caracteres como entrada estándar, evalúa el sistema de forma integral, simulando el comportamiento real de un usuario estresando el bucle principal del juego.
+
+Por su parte, **EvoSuite y Randoop** son herramientas orientadas a la generación automática de pruebas unitarias a nivel de clases y métodos de Java. Aunque son excelentes para encontrar fallos lógicos a nivel de unidades aisladas, requieren configuraciones específicas para interactuar con entradas de consola o bucles interactivos.
+
+Para el juego 2048 en particular (una aplicación basada en una interfaz de línea de comandos CLI con un bucle interactivo de texto), **el fuzzer personalizado combinado con aserciones estructurales (`repOk`) resultó ser, probablemente, la técnica más efectiva para comprobar la integración completa del sistema a través de su interfaz CLI**.
+
+En este sentido, EvoSuite y Randoop, aunque son excelentes para pruebas aisladas, chocan con las limitaciones de interactuar con **flujos de entrada/salida** de consola en tiempo de ejecución. El fuzzer, en cambio, **permitió estresar el bucle principal del juego simulando el uso real de un usuario** y asegurando, mediante aserciones defensivas, que el tablero no sufriera corrupciones lógicas silenciosas en ningún momento durante las ejecuciones realizadas.
+
+De esta manera, todas estas herramientas en conjunto, sumadas a nuestros tests manuales, **brindan una base sólida y dan diferentes perspectivas, todas ellas igualmente necesarias para aumentar la garantía de que nuestra aplicación está correctamente implementada**.
