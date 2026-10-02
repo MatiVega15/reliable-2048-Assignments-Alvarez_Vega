@@ -25,6 +25,9 @@ public class MainCLI {
         System.out.println("Controls: W(up), S(down), A(left), D(right), Q(quit)");
         System.out.println();
         
+        // Aserción defensiva para Fuzzing.
+        assert board.repOk () : "El tablero inicializado es inválido.";
+
         while (true) {
             displayBoard();
             
@@ -58,6 +61,9 @@ public class MainCLI {
                     continue;
             }
             
+            // Aserción defensiva para Fuzzing.
+            assert board.repOk () : "El estado del tablero se corrompió después del último movimiento.";
+
             if (moved) {
                 System.out.println("Tile moved!");
             } else {
