@@ -23,9 +23,15 @@
 hs_err_pid*
 replay_pid*
 
+# IDEs and editors.
 .idea
 .vscode
+
+# Common build tool directories.
 target
+
+# Python cache files.
+__pycache__
 
 # Evosuite.
 .scaffolding_list.tmp
