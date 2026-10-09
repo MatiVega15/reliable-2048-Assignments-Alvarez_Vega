@@ -1,13 +1,13 @@
 package ar.edu.unrc.game2048;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
  * Testing de Unidad para los métodos públicos de la clase Board.
