@@ -14,6 +14,8 @@ En el **Assignment 2** se profundizó el análisis de la calidad de las pruebas 
 
 En el **Assignment 3** se incorporaron dos técnicas adicionales de testing automatizado: la generación evolutiva de pruebas mediante EvoSuite y el Fuzzing de la interfaz de línea de comandos. Estas técnicas se analizaron y compararon con las suites desarrolladas anteriormente.
 
+En el **Assignment 4** se exploró la inferencia dinámica de invariantes utilizando la herramienta Daikon. Se recolectaron trazas de ejecución a partir de pruebas manuales, automáticas y rutinas de fuzzing, para luego evaluar los invariantes inferidos y determinar su utilidad como oráculos de prueba en comparación con las aserciones estáticas desarrolladas previamente.
+
 ---
 
 # **Assignment 1 (Software Testing Exercise)**
@@ -915,3 +917,60 @@ Para el juego 2048 en particular (una aplicación basada en una interfaz de lín
 En este sentido, EvoSuite y Randoop, aunque son excelentes para pruebas aisladas, chocan con las limitaciones de interactuar con **flujos de entrada/salida** de consola en tiempo de ejecución. El fuzzer, en cambio, **permitió estresar el bucle principal del juego simulando el uso real de un usuario** y asegurando, mediante aserciones defensivas, que el tablero no sufriera corrupciones lógicas silenciosas en ningún momento durante las ejecuciones realizadas.
 
 De esta manera, todas estas herramientas en conjunto, sumadas a nuestros tests manuales, **brindan una base sólida y dan diferentes perspectivas, todas ellas igualmente necesarias para aumentar la garantía de que nuestra aplicación está correctamente implementada**.
+
+---
+
+# **Assignment 4 (Oracle Generation with Daikon)**
+
+Este apartado detalla la cuarta etapa del trabajo práctico, enfocada en la **inferencia dinámica de invariantes** mediante la herramienta Daikon.
+
+A diferencia de las pruebas de regresión o aserciones manuales, Daikon **observa los valores de las variables durante la ejecución del programa** y deduce automáticamente propiedades lógicas (precondiciones, postcondiciones e invariantes de clase) que se mantienen verdaderas en todas las ejecuciones observadas.
+
+El trabajo se desarrolló siguiendo las **fases** propuestas en la consigna:
+
+1. Instrumentación y recolección de trazas.
+2. Inferencia de invariantes.
+3. Inspección y evaluación de los invariantes inferidos.
+4. Comparaciones con herramientas y técnicas previas.
+
+## ***Fase 1.1: Instrumentación de pruebas unitarias manuales y automáticas (Randoop)***
+
+Los **tests unitarios** son fundamentales para **registrar el comportamiento del sistema ante casos de borde** que no suelen ocurrir mediante el uso normal de la interfaz del juego.
+
+Para instrumentar estas ejecuciones, se utilizó **Chicory** sobre el corredor de JUnit, pasándole explícitamente las **109 pruebas manuales** realizadas por el grupo.
+
+El **comando** utilizado para restringir la instrumentación a las clases `Board` y `Cell` fue:
+
+```bash
+java -cp "lib/daikon.jar:target/classes:target/test-classes:$(mvn dependency:build-classpath -q -DforceStdout)" \
+     daikon.Chicory \
+     --ppt-select-pattern="ar.edu.unrc.game2048.Board|ar.edu.unrc.game2048.Cell" \
+     --output-dir=daikon-traces \
+     org.junit.runner.JUnitCore \
+     ar.edu.unrc.game2048.BoardTest \
+     ar.edu.unrc.game2048.CellTest
+```
+
+Los **resultados** generados se encuentran en:
+
+```text
+daikon-traces/JUnitCore.dtrace.gz
+```
+
+## ***Fase 1.2: Recolección de trazas interactivas mediante Fuzzing***
+
+Para **capturar el comportamiento dinámico del juego y el ciclo de vida real de un tablero**, se complementaron las trazas de los tests utilizando el **Fuzzer** desarrollado en el Assignment 3.
+
+Con el fin de evitar que el Fuzzer perdiera rápidamente en partidas cortas y se quedara sin explorar estados profundos, se ejecutó un **bucle Bash** que inyectó secuencias dinámicas de entre **10 y 60 movimientos aleatorios válidos** a través de la terminal en **50 ejecuciones consecutivas**.
+
+El **comando** utilizado fue:
+
+```bash
+for i in {1..50}; do python3 -c "from fuzzer import RandomFuzzer; print(RandomFuzzer(10, 60).fuzz(), end='')" | java -cp "lib/daikon.jar:target/classes" daikon.Chicory --output-dir=daikon-traces ar.edu.unrc.game2048.MainCLI; done
+```
+
+Chicory registró estas partidas y comprimió los **resultados** en:
+
+```text
+daikon-traces/MainCLI.dtrace.gz
+```
