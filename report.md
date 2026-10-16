@@ -974,3 +974,32 @@ Chicory registró estas partidas y comprimió los **resultados** en:
 ```text
 daikon-traces/MainCLI.dtrace.gz
 ```
+
+## ***Fase 2.1: Procesamiento de trazas y generación de invariantes***
+
+Para consolidar las trazas obtenidas y **generar simultáneamente el reporte de texto legible y la representación binaria persistente**, se ejcutó Daikon indicando la opción de salida binaria `-o` y redirigiendo la salida estándar hacia un archivo de texto [`daikon-output.txt`](daikon-output.txt):
+
+```bash
+java -cp lib/daikon.jar daikon.Daikon \
+     -o daikon-traces/output.inv \
+     daikon-traces/*.dtrace.gz > daikon-output.txt
+```
+
+> *Nota*: se optó por no descomprimir las trazas obtenidas durante la fase 1, debido a que Daikon permite procesar directamente los archivos comprimidos `.gz`.
+
+## ***Fase 2.2: Archivos generados***
+
+El procesamiento de las trazas produjo **dos artefactos**:
+
+- **`daikon-output.txt`**: Archivo de texto plano ubicado en la raíz del proyecto que contiene la totalidad de las propiedades e invariantes inferidos, agrupados por puntos de programa.
+- **`daikon-traces/output.inv`**: Archivo binario consolidado que almacena la estructura compilada de los invariantes. Este archivo permite realizar consultas, filtrados o formateos posteriores mediante las herramientas de Daikon sin requerir reevaluar las trazas comprimidas.
+
+## ***Fase 2.3: Verificación de la integridad del archivo binario***
+
+Con el objetivo de confirmar que el archivo binario `output.inv` se generó correctamente y sin corrupción de datos, se verificó su contenido utilizando la **utilidad `PrintInvariants`**:
+
+```bash
+java -cp lib/daikon.jar daikon.PrintInvariants daikon-traces/output.inv
+```
+
+La ejecución confirmó la **correcta compilación** de los puntos de programa observados para las clases instrumentadas, dejando el entorno listo para la etapa de inspección y evaluación de invariantes.
