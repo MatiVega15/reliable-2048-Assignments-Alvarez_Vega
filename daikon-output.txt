@@ -1,0 +1,2333 @@
+Daikon version 5.8.12, released July 14, 2022; http://plse.cs.washington.edu/daikon.
+Reading declaration files Processing trace data; reading 2 dtrace files:
+
+No return from procedure observed 6 times.  Unmatched entries are ignored!
+Unterminated calls:
+  ar.edu.unrc.game2048.Board.setCell(int, int, ar.edu.unrc.game2048.Cell) : 1 invocation
+  ar.edu.unrc.game2048.Cell.mergeWith(ar.edu.unrc.game2048.Cell) : 2 invocations
+  ar.edu.unrc.game2048.Cell.Cell(int) : 2 invocations
+  ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell) : 1 invocation
+End of report for procedures not returned from.  Unmatched entries are ignored!
+
+===========================================================================
+ar.edu.unrc.game2048.Board$Direction:::CLASS
+ar.edu.unrc.game2048.Board$Direction.UP has only one value
+ar.edu.unrc.game2048.Board$Direction.DOWN has only one value
+ar.edu.unrc.game2048.Board$Direction.LEFT has only one value
+ar.edu.unrc.game2048.Board$Direction.RIGHT has only one value
+ar.edu.unrc.game2048.Board$Direction.$VALUES has only one value
+ar.edu.unrc.game2048.Board$Direction.$VALUES.getClass().getName() == ar.edu.unrc.game2048.Board$Direction[].class
+ar.edu.unrc.game2048.Board$Direction.$VALUES[] contains no nulls and has only one value, of length 4
+ar.edu.unrc.game2048.Board$Direction.$VALUES[].getClass().getName() == [ar.edu.unrc.game2048.Board.Direction, ar.edu.unrc.game2048.Board.Direction, ar.edu.unrc.game2048.Board.Direction, ar.edu.unrc.game2048.Board.Direction]
+ar.edu.unrc.game2048.Board$Direction.$VALUES[].getClass().getName() elements == ar.edu.unrc.game2048.Board.Direction.class
+size(ar.edu.unrc.game2048.Board$Direction.$VALUES[]) == 4
+ar.edu.unrc.game2048.Board$Direction.UP in ar.edu.unrc.game2048.Board$Direction.$VALUES[]
+ar.edu.unrc.game2048.Board$Direction.DOWN in ar.edu.unrc.game2048.Board$Direction.$VALUES[]
+ar.edu.unrc.game2048.Board$Direction.LEFT in ar.edu.unrc.game2048.Board$Direction.$VALUES[]
+ar.edu.unrc.game2048.Board$Direction.RIGHT in ar.edu.unrc.game2048.Board$Direction.$VALUES[]
+===========================================================================
+ar.edu.unrc.game2048.Board$Direction:::OBJECT
+===========================================================================
+ar.edu.unrc.game2048.Board$Direction.Direction(java.lang.String, int):::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Board$Direction.Direction(java.lang.String, int):::EXIT
+$hidden$1.toString == orig($hidden$1.toString)
+===========================================================================
+ar.edu.unrc.game2048.Board$Direction.values():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Board$Direction.values():::EXIT
+ar.edu.unrc.game2048.Board$Direction.UP == orig(ar.edu.unrc.game2048.Board$Direction.UP)
+ar.edu.unrc.game2048.Board$Direction.DOWN == orig(ar.edu.unrc.game2048.Board$Direction.DOWN)
+ar.edu.unrc.game2048.Board$Direction.LEFT == orig(ar.edu.unrc.game2048.Board$Direction.LEFT)
+ar.edu.unrc.game2048.Board$Direction.RIGHT == orig(ar.edu.unrc.game2048.Board$Direction.RIGHT)
+ar.edu.unrc.game2048.Board$Direction.$VALUES == orig(ar.edu.unrc.game2048.Board$Direction.$VALUES)
+ar.edu.unrc.game2048.Board$Direction.$VALUES.getClass().getName() == return.getClass().getName()
+ar.edu.unrc.game2048.Board$Direction.$VALUES.getClass().getName() == orig(ar.edu.unrc.game2048.Board$Direction.$VALUES.getClass().getName())
+ar.edu.unrc.game2048.Board$Direction.$VALUES[] == return[]
+ar.edu.unrc.game2048.Board$Direction.$VALUES[] == orig(ar.edu.unrc.game2048.Board$Direction.$VALUES[])
+return has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board$Position:::OBJECT
+this.row >= 0
+this.col >= 0
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.Position(int, int):::ENTER
+row >= 0
+col >= 0
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.Position(int, int):::EXIT
+this.row == orig(row)
+this.col == orig(col)
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::ENTER
+this.row == this.col
+this.row == 0
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT597
+orig(this) == orig(o)
+return == true
+orig(this) has only one value
+orig(o) has only one value
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board$Position.class
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT597;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT598
+return == false
+orig(o.getClass().getName()) == java.lang.String.class
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT598;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT600
+(return == true)  ==>  (orig(o) has only one value)
+(return == true)  ==>  (orig(this) has only one value)
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board$Position.class
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT600;condition="return == true"
+orig(this) has only one value
+orig(o) has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT600;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT
+this.row == this.col
+this.row == orig(this.row)
+this.row == orig(this.col)
+(return == true)  ==>  (orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board$Position.class)
+this.row == 0
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT;condition="return == true"
+return == true
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board$Position.class
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.equals(java.lang.Object):::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.hashCode():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.hashCode():::EXIT
+this.row == orig(this.row)
+this.col == orig(this.col)
+this.row < return
+this.col < return
+31 * this.row + this.col - return + 961 == 0
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.toString():::ENTER
+this has only one value
+this.row == 1
+this.col == 3
+===========================================================================
+ar.edu.unrc.game2048.Board$Position.toString():::EXIT
+this.row == orig(this.row)
+this.col == orig(this.col)
+this.row == 1
+this.col == 3
+return has only one value
+return.toString == "(1, 3)"
+===========================================================================
+ar.edu.unrc.game2048.Board:::CLASS
+===========================================================================
+ar.edu.unrc.game2048.Board:::OBJECT
+this.grid.getClass().getName() == ar.edu.unrc.game2048.Cell[][].class
+this.tileStrategy.getClass().getName() == ar.edu.unrc.game2048.RandomTileStrategy.class
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != size(this.grid[])-1
+ar.edu.unrc.game2048.Board.WINNING_VALUE > this.size
+ar.edu.unrc.game2048.Board.WINNING_VALUE > this.score
+ar.edu.unrc.game2048.Board.WINNING_VALUE > size(this.grid[])
+this.size >= size(this.grid[])
+this.grid.getClass().getName() != this.tileStrategy.getClass().getName()
+===========================================================================
+ar.edu.unrc.game2048.Board.Board():::EXIT
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == size(this.grid[])
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(ar.edu.unrc.game2048.Board):::ENTER
+other.size == size(other.grid[])
+other != null
+other.grid != null
+other.grid.getClass().getName() == ar.edu.unrc.game2048.Cell[][].class
+other.grid[] elements != null
+other.score >= 0
+other.tileStrategy != null
+other.tileStrategy.getClass().getName() == ar.edu.unrc.game2048.RandomTileStrategy.class
+other.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != size(other.grid[])-1
+ar.edu.unrc.game2048.Board.WINNING_VALUE > other.size
+ar.edu.unrc.game2048.Board.WINNING_VALUE > other.score
+other.score % other.size == 0
+other.grid.getClass().getName() != other.tileStrategy.getClass().getName()
+other.score != size(other.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(ar.edu.unrc.game2048.Board):::EXIT
+this.size == other.size
+this.size == orig(other.size)
+this.size == size(this.grid[])
+this.size == size(other.grid[])
+this.size == orig(size(other.grid[]))
+this.grid.getClass().getName() == other.grid.getClass().getName()
+this.grid.getClass().getName() == orig(other.grid.getClass().getName())
+this.score == other.score
+this.score == orig(other.score)
+this.tileStrategy == other.tileStrategy
+this.tileStrategy == orig(other.tileStrategy)
+this.tileStrategy.getClass().getName() == other.tileStrategy.getClass().getName()
+this.tileStrategy.getClass().getName() == orig(other.tileStrategy.getClass().getName())
+other.grid == orig(other.grid)
+other.grid[] == orig(other.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+other.grid != null
+other.grid[] elements != null
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(int):::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(int):::EXIT
+this.size == orig(size)
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score == 0
+this.tileStrategy != null
+this.score <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(int, ar.edu.unrc.game2048.TileStrategy):::ENTER
+strategy != null
+strategy.getClass().getName() == ar.edu.unrc.game2048.RandomTileStrategy.class
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(int, ar.edu.unrc.game2048.TileStrategy):::EXIT
+this.size == orig(size)
+this.size == size(this.grid[])
+this.tileStrategy == orig(strategy)
+this.tileStrategy.getClass().getName() == orig(strategy.getClass().getName())
+this.grid != null
+this.grid[] elements != null
+this.score == 0
+this.tileStrategy != null
+this.score <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.addRandomTile():::ENTER
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.addRandomTile():::EXIT449
+this.score == size(this.grid[])-1
+this.score == orig(size(this.grid[]))-1
+this.grid[this.size-1] == this.grid[this.score]
+orig(this.grid[post(this.size)-1]) == this.grid[this.score]
+this.grid[this.score] == this.grid[orig(this.size)-1]
+this.grid[this.score] == orig(this.grid[this.size-1])
+this.size == 1
+this.grid[] elements == this.grid[this.score]
+===========================================================================
+ar.edu.unrc.game2048.Board.addRandomTile():::EXIT457
+===========================================================================
+ar.edu.unrc.game2048.Board.addRandomTile():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.grid.getClass().getName() != o.getClass().getName()
+this.score != size(this.grid[])-1
+this.tileStrategy.getClass().getName() != o.getClass().getName()
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT470
+orig(this) == orig(o)
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+orig(o) has only one value
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board.class
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT470;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT471
+this.size == 2
+this.score == 0
+return == false
+orig(o.getClass().getName()) == java.lang.String.class
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT471;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT473
+(return == true)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score)
+(return == true)  ==>  (this.score one of { 0, 136 })
+(return == true)  ==>  (this.size != this.score)
+orig(o) != null
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board.class
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT473;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT473;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == true)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score)
+(return == true)  ==>  (orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board.class)
+(return == true)  ==>  (this.score one of { 0, 136 })
+(return == true)  ==>  (this.size != this.score)
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.grid.getClass().getName() != orig(o.getClass().getName())
+this.score != size(this.grid[])-1
+this.tileStrategy.getClass().getName() != orig(o.getClass().getName())
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT;condition="return == true"
+this.score one of { 0, 136 }
+return == true
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Board.class
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score
+this.size != this.score
+===========================================================================
+ar.edu.unrc.game2048.Board.equals(java.lang.Object):::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.finalizarMovimiento(ar.edu.unrc.game2048.Board):::ENTER
+this.size == previo.size
+this.size == size(this.grid[])
+this.size == size(previo.grid[])
+this.grid.getClass().getName() == previo.grid.getClass().getName()
+this.tileStrategy == previo.tileStrategy
+this.tileStrategy.getClass().getName() == previo.tileStrategy.getClass().getName()
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+previo != null
+previo.grid != null
+previo.grid[] elements != null
+previo.score >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+previo.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+ar.edu.unrc.game2048.Board.WINNING_VALUE > previo.score
+this.score % this.size == 0
+previo.score % this.size == 0
+this.score >= previo.score
+this.score != size(this.grid[])-1
+previo.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.finalizarMovimiento(ar.edu.unrc.game2048.Board):::EXIT
+this.size == previo.size
+this.size == orig(this.size)
+this.size == orig(previo.size)
+this.size == size(this.grid[])
+this.size == size(previo.grid[])
+this.size == orig(size(this.grid[]))
+this.size == orig(size(previo.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == previo.grid.getClass().getName()
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid.getClass().getName() == orig(previo.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == previo.tileStrategy
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy == orig(previo.tileStrategy)
+this.tileStrategy.getClass().getName() == previo.tileStrategy.getClass().getName()
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.tileStrategy.getClass().getName() == orig(previo.tileStrategy.getClass().getName())
+previo.grid == orig(previo.grid)
+previo.grid[] == orig(previo.grid[])
+previo.score == orig(previo.score)
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE != previo.score)
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score)
+(return == false)  ==>  (previo.score one of { 0, 136 })
+(return == false)  ==>  (this.score == previo.score)
+(return == false)  ==>  (this.score one of { 0, 136 })
+(return == false)  ==>  (this.size != previo.score)
+(return == false)  ==>  (this.size != this.score)
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+previo.grid != null
+previo.grid[] elements != null
+previo.score >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+previo.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+ar.edu.unrc.game2048.Board.WINNING_VALUE > previo.score
+this.score % this.size == 0
+previo.score % this.size == 0
+this.score >= previo.score
+this.score != size(this.grid[])-1
+previo.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.finalizarMovimiento(ar.edu.unrc.game2048.Board):::EXIT;condition="return == true"
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Board.finalizarMovimiento(ar.edu.unrc.game2048.Board):::EXIT;condition="not(return == true)"
+this.score == previo.score
+this.score == orig(previo.score)
+this.score one of { 0, 136 }
+return == false
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score
+this.size != this.score
+===========================================================================
+ar.edu.unrc.game2048.Board.getCell(int, int):::ENTER
+this.size == size(this.grid[])
+this.size >= 2
+this.grid != null
+this.grid[] elements != null
+this.score one of { 0, 4 }
+this.tileStrategy != null
+row >= 0
+col >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.score
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > row
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > col
+ar.edu.unrc.game2048.Board.WINNING_VALUE > row
+ar.edu.unrc.game2048.Board.WINNING_VALUE > col
+this.score % this.size == 0
+this.size >= this.score
+this.score != size(this.grid[])-1
+row <= size(this.grid[])-1
+col <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.getCell(int, int):::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.size >= 2
+this.grid != null
+this.grid[] elements != null
+this.score one of { 0, 4 }
+this.tileStrategy != null
+return != null
+return.value >= 0
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+ar.edu.unrc.game2048.Cell.EMPTY != null
+ar.edu.unrc.game2048.Cell.EMPTY.value == 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.score
+ar.edu.unrc.game2048.Board.WINNING_VALUE > return.value
+this.score % this.size == 0
+this.size >= this.score
+this.score <= return.value
+this.score >= ar.edu.unrc.game2048.Cell.EMPTY.value
+this.score != size(this.grid[])-1
+return.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= orig(row)
+ar.edu.unrc.game2048.Cell.EMPTY.value <= orig(col)
+ar.edu.unrc.game2048.Cell.EMPTY.value < size(this.grid[])-1
+orig(row) <= size(this.grid[])-1
+orig(col) <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.getEmptyPositions():::ENTER
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.getEmptyPositions():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+return != null
+return.getClass().getName() == java.util.HashSet.class
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.grid.getClass().getName() != return.getClass().getName()
+this.tileStrategy.getClass().getName() != return.getClass().getName()
+===========================================================================
+ar.edu.unrc.game2048.Board.getScore():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 4, 10 }
+this.score one of { 0, 4, 168 }
+this.score % this.size == 0
+this.score % size(this.grid[])-1 == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.getScore():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == return
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+return == orig(this.score)
+this.size one of { 2, 4, 10 }
+return one of { 0, 4, 168 }
+return % this.size == 0
+return % size(this.grid[])-1 == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.getSize():::ENTER
+this.size == size(this.grid[])
+this.size one of { 4, 10 }
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.getSize():::EXIT
+this.size == return
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+return == orig(this.size)
+return == size(this.grid[])
+return == orig(size(this.grid[]))
+this.score == 0
+return one of { 4, 10 }
+===========================================================================
+ar.edu.unrc.game2048.Board.hasEmptyCells():::ENTER
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.hasEmptyCells():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.score)
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.size)
+(return == false)  ==>  (this.score <= size(this.grid[])-1)
+(return == false)  ==>  (this.score == 0)
+(return == false)  ==>  (this.size one of { 1, 2, 3 })
+(return == true)  ==>  (this.score != size(this.grid[])-1)
+(return == true)  ==>  (this.size one of { 2, 4 })
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.hasEmptyCells():::EXIT;condition="return == true"
+this.size one of { 2, 4 }
+return == true
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.hasEmptyCells():::EXIT;condition="not(return == true)"
+this.size one of { 1, 2, 3 }
+this.score == 0
+return == false
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.size
+this.score <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.hashCode():::ENTER
+this.size == size(this.grid[])
+this.size == 2
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.hashCode():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.size == 2
+this.score == 0
+return one of { 2062368, 2066212 }
+===========================================================================
+ar.edu.unrc.game2048.Board.initializeEmpty():::ENTER
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score == 0
+this.tileStrategy != null
+this.score <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.initializeEmpty():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.grid != null
+this.grid[] elements != null
+this.score == 0
+this.tileStrategy != null
+this.score <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::ENTER
+this.size == size(this.grid[])
+this.size == 2
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == true)  ==>  (orig(this) has only one value)
+(return == true)  ==>  (this.grid has only one value)
+(return == true)  ==>  (this.grid[] contains no nulls and has only one value, of length 2)
+(return == true)  ==>  (this.grid[this.score] has only one value)
+(return == true)  ==>  (this.grid[this.size-1] has only one value)
+(return == true)  ==>  (this.tileStrategy has only one value)
+this.size == 2
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::EXIT;condition="return == true"
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT241
+this.size one of { 2, 4 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT241;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT250
+this.size one of { 2, 3 }
+this.score == 0
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT250;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT254
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT254;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT258
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT258;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (this.size one of { 2, 3, 4 })
+(return == true)  ==>  (orig(this) has only one value)
+(return == true)  ==>  (orig(this.grid[post(this.score)]) has only one value)
+(return == true)  ==>  (orig(this.grid[this.score]) has only one value)
+(return == true)  ==>  (this.grid has only one value)
+(return == true)  ==>  (this.grid[] contains no nulls and has only one value, of length 2)
+(return == true)  ==>  (this.grid[orig(this.score)] has only one value)
+(return == true)  ==>  (this.grid[this.score] has only one value)
+(return == true)  ==>  (this.grid[this.size-1] has only one value)
+(return == true)  ==>  (this.score == 0)
+(return == true)  ==>  (this.size == 2)
+(return == true)  ==>  (this.tileStrategy has only one value)
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT;condition="return == true"
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::ENTER
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT225
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 4
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[ar.edu.unrc.game2048.Board.DEFAULT_SIZE-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT225;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT229
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT229;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == size(this.grid[])
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == true)  ==>  (orig(this) has only one value)
+(return == true)  ==>  (orig(this.grid[post(this.score)]) has only one value)
+(return == true)  ==>  (orig(this.grid[this.score]) has only one value)
+(return == true)  ==>  (this.grid has only one value)
+(return == true)  ==>  (this.grid[] contains no nulls and has only one value, of length 4)
+(return == true)  ==>  (this.grid[ar.edu.unrc.game2048.Board.DEFAULT_SIZE-1] has only one value)
+(return == true)  ==>  (this.grid[orig(this.score)] has only one value)
+(return == true)  ==>  (this.grid[this.score] has only one value)
+(return == true)  ==>  (this.score == 0)
+(return == true)  ==>  (this.tileStrategy has only one value)
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT;condition="return == true"
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 4
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[ar.edu.unrc.game2048.Board.DEFAULT_SIZE-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isWinningBoard():::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.moveDown():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveDown():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (orig(this.score) one of { 0, 136 })
+(return == false)  ==>  (this.score == orig(this.score))
+(return == false)  ==>  (this.score one of { 0, 136 })
+(return == false)  ==>  (this.size one of { 2, 3, 4 })
+(return == true)  ==>  (this.size one of { 2, 4 })
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+orig(this.score) % this.size == 0
+this.score >= orig(this.score)
+this.score != size(this.grid[])-1
+orig(this.score) != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveDown():::EXIT;condition="return == true"
+this.size one of { 2, 4 }
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Board.moveDown():::EXIT;condition="not(return == true)"
+this.score == orig(this.score)
+this.score one of { 0, 136 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.moveLeft():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 4 }
+this.score >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.size != this.score
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveLeft():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (orig(this) has only one value)
+(return == false)  ==>  (orig(this.grid[post(this.score)]) has only one value)
+(return == false)  ==>  (orig(this.grid[this.score]) has only one value)
+(return == false)  ==>  (orig(this.score) == 0)
+(return == false)  ==>  (this.grid has only one value)
+(return == false)  ==>  (this.grid[] contains no nulls and has only one value, of length 2)
+(return == false)  ==>  (this.grid[orig(this.score)] has only one value)
+(return == false)  ==>  (this.grid[this.score] has only one value)
+(return == false)  ==>  (this.grid[this.size-1] has only one value)
+(return == false)  ==>  (this.score == 0)
+(return == false)  ==>  (this.score == orig(this.score))
+(return == false)  ==>  (this.size == 2)
+(return == false)  ==>  (this.tileStrategy has only one value)
+(return == true)  ==>  (this.size one of { 2, 4 })
+this.size one of { 2, 4 }
+this.score >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+orig(this.score) % this.size == 0
+this.size != orig(this.score)
+this.score >= orig(this.score)
+this.score != size(this.grid[])-1
+orig(this.score) != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveLeft():::EXIT;condition="return == true"
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Board.moveLeft():::EXIT;condition="not(return == true)"
+this.score == orig(this.score)
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.moveRight():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 3, 4 }
+this.score >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.size != this.score
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveRight():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (orig(this.score) one of { 0, 136 })
+(return == false)  ==>  (this.score == orig(this.score))
+(return == false)  ==>  (this.score one of { 0, 136 })
+(return == false)  ==>  (this.size one of { 2, 4 })
+(return == true)  ==>  (this.size one of { 2, 3, 4 })
+this.size one of { 2, 3, 4 }
+this.score >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+orig(this.score) % this.size == 0
+this.size != orig(this.score)
+this.score >= orig(this.score)
+this.score != size(this.grid[])-1
+orig(this.score) != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveRight():::EXIT;condition="return == true"
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Board.moveRight():::EXIT;condition="not(return == true)"
+this.score == orig(this.score)
+this.size one of { 2, 4 }
+this.score one of { 0, 136 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.size != this.score
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (orig(this.score) one of { 0, 136 })
+(return == false)  ==>  (this.score == orig(this.score))
+(return == false)  ==>  (this.score one of { 0, 136 })
+this.size one of { 2, 4 }
+this.grid != null
+this.grid[] elements != null
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+orig(this.score) % this.size == 0
+this.size != orig(this.score)
+this.score >= orig(this.score)
+this.score != size(this.grid[])-1
+orig(this.score) != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::EXIT;condition="return == true"
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::EXIT;condition="not(return == true)"
+this.score == orig(this.score)
+this.score one of { 0, 136 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.procesarLinea(java.util.List):::ENTER
+this.size == size(this.grid[])
+this.size == size(celdas[])
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+celdas != null
+celdas[] elements != null
+celdas[].getClass().getName() elements == ar.edu.unrc.game2048.Cell.class
+celdas.getClass().getName() == java.util.ArrayList.class
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.grid.getClass().getName() != celdas.getClass().getName()
+this.score != size(this.grid[])-1
+this.tileStrategy.getClass().getName() != celdas.getClass().getName()
+===========================================================================
+ar.edu.unrc.game2048.Board.procesarLinea(java.util.List):::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == size(return[])
+this.size == orig(size(this.grid[]))
+this.size == orig(size(celdas[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+celdas[] == orig(celdas[])
+return.getClass().getName() == orig(celdas.getClass().getName())
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+celdas[] elements != null
+celdas[].getClass().getName() elements == ar.edu.unrc.game2048.Cell.class
+return != null
+return[] elements != null
+return.getClass().getName() == java.util.ArrayList.class
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+orig(this.score) % this.size == 0
+this.grid.getClass().getName() != return.getClass().getName()
+this.score >= orig(this.score)
+this.score != size(celdas[])-1
+this.tileStrategy.getClass().getName() != return.getClass().getName()
+orig(this.score) != size(celdas[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT531
+this.size == this.score
+this.size == orig(this.score)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid has only one value
+this.grid[] == []
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT531;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT536
+this.size == 2
+this.grid == null
+this.score == 0
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT536;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT541
+this.size == 3
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+size(this.grid[]) == 2
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT541;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT546
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == -1
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT546;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT552
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.size == 2
+this.score == 0
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT552;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT560
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.size == 2
+this.score == 0
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT560;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT567
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy == null
+return == false
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT567;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT571
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+return == true
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT571;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT
+this.size == orig(this.size)
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE > size(this.grid[]))
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.score)
+(return == false)  ==>  (ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.size)
+(return == false)  ==>  (size(this.grid[]) one of { 0, 2 })
+(return == false)  ==>  (this.score != size(this.grid[])-1)
+(return == false)  ==>  (this.score <= size(this.grid[]))
+(return == false)  ==>  (this.score one of { -1, 0 })
+(return == false)  ==>  (this.size % size(this.grid[])-1 == 0)
+(return == false)  ==>  (this.size >= this.score)
+(return == false)  ==>  (this.size one of { 0, 2, 3 })
+(return == true)  ==>  (this.grid != null)
+(return == true)  ==>  (this.grid[] elements != null)
+(return == true)  ==>  (this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0)
+(return == true)  ==>  (this.score % size(this.grid[]) == 0)
+(return == true)  ==>  (this.score % this.size == 0)
+(return == true)  ==>  (this.score >= 0)
+(return == true)  ==>  (this.size == size(this.grid[]))
+(return == true)  ==>  (this.tileStrategy != null)
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT;condition="return == true"
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+return == true
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.repOk():::EXIT;condition="not(return == true)"
+this.size one of { 0, 2, 3 }
+this.score one of { -1, 0 }
+return == false
+size(this.grid[]) one of { 0, 2 }
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > this.score
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > size(this.grid[])
+this.size >= this.score
+this.size % size(this.grid[])-1 == 0
+this.score <= size(this.grid[])
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.setCell(int, int, ar.edu.unrc.game2048.Cell):::ENTER
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score one of { 0, 4 }
+this.tileStrategy != null
+row >= 0
+col >= 0
+cell != null
+cell.value >= 0
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+ar.edu.unrc.game2048.Cell.EMPTY != null
+ar.edu.unrc.game2048.Cell.EMPTY.value == 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.score
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > row
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > col
+ar.edu.unrc.game2048.Board.WINNING_VALUE > row
+ar.edu.unrc.game2048.Board.WINNING_VALUE > col
+ar.edu.unrc.game2048.Board.WINNING_VALUE >= cell.value
+this.score % this.size == 0
+this.size != this.score
+this.score >= ar.edu.unrc.game2048.Cell.EMPTY.value
+row >= ar.edu.unrc.game2048.Cell.EMPTY.value
+row <= size(this.grid[])-1
+col >= ar.edu.unrc.game2048.Cell.EMPTY.value
+col <= size(this.grid[])-1
+cell.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.setCell(int, int, ar.edu.unrc.game2048.Cell):::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+cell.value == orig(cell.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.grid != null
+this.grid[] elements != null
+this.score one of { 0, 4 }
+this.tileStrategy != null
+cell.value >= 0
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+ar.edu.unrc.game2048.Cell.EMPTY != null
+ar.edu.unrc.game2048.Cell.EMPTY.value == 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.score
+ar.edu.unrc.game2048.Board.WINNING_VALUE >= cell.value
+this.score % this.size == 0
+this.size != this.score
+this.score >= ar.edu.unrc.game2048.Cell.EMPTY.value
+cell.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= orig(row)
+ar.edu.unrc.game2048.Cell.EMPTY.value <= orig(col)
+ar.edu.unrc.game2048.Cell.EMPTY.value <= size(this.grid[])-1
+orig(row) <= size(this.grid[])-1
+orig(col) <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.toString():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.toString():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.size one of { 2, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+return != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.validatePosition(int, int):::ENTER
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score one of { 0, 4 }
+this.tileStrategy != null
+row >= 0
+col >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.score
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > row
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > col
+ar.edu.unrc.game2048.Board.WINNING_VALUE > row
+ar.edu.unrc.game2048.Board.WINNING_VALUE > col
+this.score % this.size == 0
+row <= size(this.grid[])-1
+col <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.validatePosition(int, int):::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+this.grid != null
+this.grid[] elements != null
+this.score one of { 0, 4 }
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.score
+this.score % this.size == 0
+orig(row) <= size(this.grid[])-1
+orig(col) <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$1:::OBJECT
+this has only one value
+ar.edu.unrc.game2048.BoardTest.this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$1.(ar.edu.unrc.game2048.BoardTest):::ENTER
+ar.edu.unrc.game2048.BoardTest.this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$1.(ar.edu.unrc.game2048.BoardTest):::EXIT
+ar.edu.unrc.game2048.BoardTest.this == orig(ar.edu.unrc.game2048.BoardTest.this)
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$1.nextDouble():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$1.nextDouble():::EXIT
+ar.edu.unrc.game2048.BoardTest.this == orig(ar.edu.unrc.game2048.BoardTest.this)
+return == 0.9
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2:::OBJECT
+this.row == this.col
+this has only one value
+ar.edu.unrc.game2048.BoardTest.this has only one value
+this.row == 1
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.(ar.edu.unrc.game2048.BoardTest, int, int):::ENTER
+x0 == x1
+ar.edu.unrc.game2048.BoardTest.this has only one value
+x0 == 1
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.(ar.edu.unrc.game2048.BoardTest, int, int):::EXIT
+ar.edu.unrc.game2048.BoardTest.this == orig(ar.edu.unrc.game2048.BoardTest.this)
+this.row == orig(x0)
+this.row == orig(x1)
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.equals(java.lang.Object):::ENTER
+o has only one value
+o.getClass().getName() == ar.edu.unrc.game2048.Board$Position.class
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.equals(java.lang.Object):::EXIT
+ar.edu.unrc.game2048.BoardTest.this == orig(ar.edu.unrc.game2048.BoardTest.this)
+this.row == orig(this.row)
+this.row == orig(this.col)
+return == false
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.equals(java.lang.Object):::EXIT;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.hashCode():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.BoardTest$2.hashCode():::EXIT
+ar.edu.unrc.game2048.BoardTest.this == orig(ar.edu.unrc.game2048.BoardTest.this)
+this.row == orig(this.row)
+this.row == orig(this.col)
+return == 994
+===========================================================================
+ar.edu.unrc.game2048.BoardTest:::OBJECT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.BoardTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorAgregaDosFichasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorAgregaDosFichasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorCopiaTableroNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorCopiaTableroNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorCopiaTableroTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorCopiaTableroTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorEstrategiaNulaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorEstrategiaNulaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorPorDefectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorPorDefectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorTamañoPorParametroCorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorTamañoPorParametroCorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorTamañoPorParametroIncorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.constructorTamañoPorParametroIncorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.deterministicTileStrategyPosicionTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.deterministicTileStrategyPosicionTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.deterministicTileStrategyValorTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.deterministicTileStrategyValorTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.directionValoresTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.directionValoresTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsDimensionesDistintasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsDimensionesDistintasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsMismoObjetoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsMismoObjetoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsObjetoDistintoTipoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsObjetoDistintoTipoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsObjetoNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsObjetoNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionColumnasDistintasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionColumnasDistintasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionDistintosTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionDistintosTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionFilasDistintasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionFilasDistintasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionIgualesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionIgualesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionMismoObjetoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionMismoObjetoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionObjetoNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionObjetoNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionTipoDistintoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPositionTipoDistintoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPuntuacionesDistintasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsPuntuacionesDistintasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsTablerosIgualesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.equalsTablerosIgualesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellColumnaInvalida2Test():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellColumnaInvalida2Test():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellColumnaInvalidaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellColumnaInvalidaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellFilaInvalidaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellFilaInvalidaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellPosicionNegativaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellPosicionNegativaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellPosicionValidaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getCellPosicionValidaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getEmptyPositionsConCeldasVaciasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getEmptyPositionsConCeldasVaciasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getEmptyPositionsSinCeldasVaciasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getEmptyPositionsSinCeldasVaciasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getScorePositivoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.getScorePositivoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hasEmptyCellConCeldaVaciaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hasEmptyCellConCeldaVaciaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hasEmptyCellSinCeldaVaciaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hasEmptyCellSinCeldaVaciaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodePositionDistintosTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodePositionDistintosTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodePositionIgualesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodePositionIgualesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodeTablerosDistintosTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodeTablerosDistintosTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodeTablerosIgualesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.hashCodeTablerosIgualesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConCeldaVaciaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConCeldaVaciaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesHorizontalesTableroMayorTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesHorizontalesTableroMayorTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesHorizontalesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesHorizontalesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesHorizontalesUltimasColumnasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesHorizontalesUltimasColumnasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesVerticalesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.isLosingBoardConFusionesVerticalesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownSinFusionesTableroMayorTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownSinFusionesTableroMayorTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownSinFusionesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownSinFusionesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownSinMovimientoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownSinMovimientoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownVerificandoIndiceCeroTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveDownVerificandoIndiceCeroTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveLeftSinFusionesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveLeftSinFusionesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveLeftSinMovimientoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveLeftSinMovimientoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveRightSinFusionesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveRightSinFusionesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveRightSinMovimientoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveRightSinMovimientoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveRightVerificandoIndiceCeroTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveRightVerificandoIndiceCeroTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveUpSinFusionesTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveUpSinFusionesTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveUpSinMovimientoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.moveUpSinMovimientoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.movimientoExitosoAgregaNuevaFichaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.movimientoExitosoAgregaNuevaFichaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.positionConstructorTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.positionConstructorTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.randomTileStrategyTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.randomTileStrategyTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorCeldaInvalidaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorCeldaInvalidaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorCeldaNulaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorCeldaNulaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorFilaDeTamañoIncorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorFilaDeTamañoIncorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorFilaNulaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorFilaNulaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorGridDeTamañoIncorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorGridDeTamañoIncorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorGridNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorGridNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorScoreNegativoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorScoreNegativoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorSizeInvalidoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorSizeInvalidoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorTileStrategyNulaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.repOkFalsoPorTileStrategyNulaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellColumnaInvalidaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellColumnaInvalidaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellFilaInvalidaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellFilaInvalidaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellFilaYColumnaInvalidasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellFilaYColumnaInvalidasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellNulaTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.setCellNulaTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testAddCell():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testAddCell():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testFullBoardLleno():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testFullBoardLleno():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testFullBoardNoLlenoConCeldas():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testFullBoardNoLlenoConCeldas():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testFullBoardNoLlenoSinCeldas():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testFullBoardNoLlenoSinCeldas():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testGetScore():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testGetScore():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testIsLosing():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testIsLosing():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testIsWinning():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testIsWinning():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testIsWinningNegative():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testIsWinningNegative():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveDown():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveDown():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveLeft():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveLeft():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveRight():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveRight():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveUp():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testMoveUp():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testNotValidSize():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testNotValidSize():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testSize():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.testSize():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.toStringPositionTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.toStringPositionTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.toStringTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.BoardTest.toStringTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.Cell:::CLASS
+ar.edu.unrc.game2048.Cell.EMPTY != null
+ar.edu.unrc.game2048.Cell.EMPTY.value == 0
+===========================================================================
+ar.edu.unrc.game2048.Cell:::OBJECT
+===========================================================================
+ar.edu.unrc.game2048.Cell.Cell(int):::ENTER
+value >= 0
+===========================================================================
+ar.edu.unrc.game2048.Cell.Cell(int):::EXIT
+this.value == orig(value)
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::ENTER
+other != null
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT90
+this.value one of { 0, 2 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+other.value one of { 0, 2 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT90;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT92
+(return == false)  <==>  (this.value != other.value)
+(return == true)  <==>  (this.value == other.value)
+this.value >= 2
+this.value is a power of 2
+other.value >= 2
+other.value is a power of 2
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value < other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT92;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT92;condition="not(return == true)"
+this.value != other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+other.value == orig(other.value)
+(return == true)  ==>  (ar.edu.unrc.game2048.Cell.EMPTY.value < other.value)
+(return == true)  ==>  (other.value >= 2)
+(return == true)  ==>  (other.value is a power of 2)
+(return == true)  ==>  (this.value == other.value)
+(return == true)  ==>  (this.value > ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == true)  ==>  (this.value >= 2)
+(return == true)  ==>  (this.value is a power of 2)
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT;condition="return == true"
+this.value == other.value
+this.value == orig(other.value)
+this.value >= 2
+this.value is a power of 2
+return == true
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::ENTER
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT125
+orig(this) == orig(o)
+this.value one of { 2, 8, 512 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return == true
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Cell.class
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT125;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT126
+this.value == 2
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return == false
+orig(o.getClass().getName()) == java.lang.String.class
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT126;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT128
+(return == false)  ==>  (this.value one of { 0, 2, 4 })
+(return == true)  ==>  (ar.edu.unrc.game2048.Cell.EMPTY has only one value)
+(return == true)  ==>  (this.value > ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == true)  ==>  (this.value one of { 2, 4 })
+this.value one of { 0, 2, 4 }
+orig(o) != null
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Cell.class
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT128;condition="return == true"
+this.value one of { 2, 4 }
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT128;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == false)  ==>  (this.value one of { 0, 2, 4 })
+(return == true)  ==>  (ar.edu.unrc.game2048.Cell.EMPTY has only one value)
+(return == true)  ==>  (orig(o) != null)
+(return == true)  ==>  (orig(o.getClass().getName()) == ar.edu.unrc.game2048.Cell.class)
+(return == true)  ==>  (this.value > ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == true)  ==>  (this.value >= 2)
+(return == true)  ==>  (this.value is a power of 2)
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT;condition="return == true"
+this.value >= 2
+this.value is a power of 2
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return == true
+orig(o) != null
+orig(o.getClass().getName()) == ar.edu.unrc.game2048.Cell.class
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.equals(java.lang.Object):::EXIT;condition="not(return == true)"
+this.value one of { 0, 2, 4 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Cell.esPotenciaDeDos(int):::ENTER
+valor >= 2
+ar.edu.unrc.game2048.Cell.EMPTY.value < valor
+===========================================================================
+ar.edu.unrc.game2048.Cell.esPotenciaDeDos(int):::EXIT
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == false)  ==>  (ar.edu.unrc.game2048.Cell.EMPTY has only one value)
+(return == false)  ==>  (orig(valor) == 3)
+(return == true)  ==>  (orig(valor) >= 2)
+(return == true)  ==>  (orig(valor) is a power of 2)
+ar.edu.unrc.game2048.Cell.EMPTY.value < orig(valor)
+===========================================================================
+ar.edu.unrc.game2048.Cell.esPotenciaDeDos(int):::EXIT;condition="return == true"
+return == true
+orig(valor) is a power of 2
+===========================================================================
+ar.edu.unrc.game2048.Cell.esPotenciaDeDos(int):::EXIT;condition="not(return == true)"
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return == false
+orig(valor) == 3
+===========================================================================
+ar.edu.unrc.game2048.Cell.getValue():::ENTER
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.getValue():::EXIT
+this.value == return
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+return == orig(this.value)
+return >= 0
+ar.edu.unrc.game2048.Cell.EMPTY.value <= return
+===========================================================================
+ar.edu.unrc.game2048.Cell.hashCode():::ENTER
+this.value one of { 0, 2, 4 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.hashCode():::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value one of { 0, 2, 4 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return one of { 31, 33, 35 }
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+this.value < return
+ar.edu.unrc.game2048.Cell.EMPTY.value < return
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::ENTER
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+(this.value == 0)  <==>  (return == true)
+(this.value == 0)  <==>  (this.value == ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::EXIT;condition="return == true"
+this.value == ar.edu.unrc.game2048.Cell.EMPTY.value
+this.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value == 0
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::EXIT;condition="not(return == true)"
+this.value >= 2
+this.value is a power of 2
+return == false
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.mergeWith(ar.edu.unrc.game2048.Cell):::ENTER
+this.value == other.value
+this.value >= 2
+this.value is a power of 2
+other != null
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.mergeWith(ar.edu.unrc.game2048.Cell):::EXIT
+this.value == other.value
+this.value == orig(this.value)
+this.value == orig(other.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value >= 2
+this.value is a power of 2
+return != null
+return.value is a power of 2
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+2 * this.value - return.value == 0
+this.value < return.value
+ar.edu.unrc.game2048.Cell.EMPTY.value < return.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.repOk():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Cell.repOk():::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == false)  ==>  (ar.edu.unrc.game2048.Cell.EMPTY has only one value)
+(return == false)  ==>  (this.value one of { -3, 3 })
+(return == true)  ==>  (this.value >= 0)
+(return == true)  ==>  (this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value)
+===========================================================================
+ar.edu.unrc.game2048.Cell.repOk():::EXIT;condition="return == true"
+this.value >= 0
+return == true
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.repOk():::EXIT;condition="not(return == true)"
+this.value one of { -3, 3 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Cell.toString():::ENTER
+this.value one of { 0, 2, 4 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+===========================================================================
+ar.edu.unrc.game2048.Cell.toString():::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value one of { 0, 2, 4 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+return.toString one of { ".", "2", "4" }
+===========================================================================
+ar.edu.unrc.game2048.CellTest:::OBJECT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.CellTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.TestCellBadValue():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.TestCellBadValue():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeInvalidEmpty():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeInvalidEmpty():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeInvalidNewEmpty():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeInvalidNewEmpty():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeValid():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeValid():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeWithAmbasCeldasVaciasTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeWithAmbasCeldasVaciasTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeWithParametroNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.canMergeWithParametroNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.constructorCorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.constructorCorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.constructorExcepcionTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.constructorExcepcionTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsConParametroDeOtroTipoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsConParametroDeOtroTipoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsConParametroNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsConParametroNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsTestNegative():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsTestNegative():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsTestPositive():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.equalsTestPositive():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.hashCodeTestNegative():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.hashCodeTestNegative():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.hashCodeTestPositive():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.hashCodeTestPositive():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.isEmptyFalso():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.isEmptyFalso():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.isEmptyTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.isEmptyTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.mergeWithCorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.mergeWithCorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.mergeWithIncorrectoTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.mergeWithIncorrectoTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.mergeWithParametroNuloTest():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.mergeWithParametroNuloTest():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.repOkFalsoPorNoSerPotenciaDeDos():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.repOkFalsoPorNoSerPotenciaDeDos():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.repOkFalsoPorSerNegativo():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.repOkFalsoPorSerNegativo():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.testGetValue():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.testGetValue():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.toStringEmpty():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.toStringEmpty():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.CellTest.toStringWithValue():::ENTER
+this has only one value
+===========================================================================
+ar.edu.unrc.game2048.CellTest.toStringWithValue():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.MainCLI:::CLASS
+ar.edu.unrc.game2048.MainCLI.$assertionsDisabled == false
+===========================================================================
+ar.edu.unrc.game2048.MainCLI:::OBJECT
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == this.board.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE == size(this.board.grid[])
+this has only one value
+this.board has only one value
+this.board != null
+this.board.grid has only one value
+this.board.grid != null
+this.board.grid.getClass().getName() == ar.edu.unrc.game2048.Cell[][].class
+this.board.grid[] contains no nulls and has only one value, of length 4
+this.board.grid[] elements != null
+this.board.score >= 0
+this.board.tileStrategy has only one value
+this.board.tileStrategy != null
+this.board.tileStrategy.getClass().getName() == ar.edu.unrc.game2048.RandomTileStrategy.class
+this.scanner has only one value
+this.scanner != null
+this.board.grid[ar.edu.unrc.game2048.Board.DEFAULT_SIZE-1] has only one value
+this.board.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+ar.edu.unrc.game2048.Board.WINNING_VALUE > this.board.score
+this.board.grid.getClass().getName() != this.board.tileStrategy.getClass().getName()
+this.board.score != size(this.board.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.MainCLI():::EXIT
+this.board.score == 0
+this.board.grid[this.board.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.displayBoard():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.displayBoard():::EXIT
+this.board == orig(this.board)
+this.board.grid == orig(this.board.grid)
+this.board.grid.getClass().getName() == orig(this.board.grid.getClass().getName())
+this.board.grid[] == orig(this.board.grid[])
+this.board.score == orig(this.board.score)
+this.board.tileStrategy == orig(this.board.tileStrategy)
+this.board.tileStrategy.getClass().getName() == orig(this.board.tileStrategy.getClass().getName())
+this.scanner == orig(this.scanner)
+ar.edu.unrc.game2048.MainCLI.$assertionsDisabled == orig(ar.edu.unrc.game2048.MainCLI.$assertionsDisabled)
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.main(java.lang.String[]):::ENTER
+args has only one value
+args.getClass().getName() == java.lang.String[].class
+args[] == []
+args[].toString == []
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.main(java.lang.String[]):::EXIT
+ar.edu.unrc.game2048.MainCLI.$assertionsDisabled == orig(ar.edu.unrc.game2048.MainCLI.$assertionsDisabled)
+args[] == orig(args[])
+args[] == []
+args[].toString == []
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.play():::ENTER
+this.board.score == 0
+this.board.grid[this.board.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.MainCLI.play():::EXIT
+this.board == orig(this.board)
+this.board.grid == orig(this.board.grid)
+this.board.grid.getClass().getName() == orig(this.board.grid.getClass().getName())
+this.board.grid[] == orig(this.board.grid[])
+this.board.tileStrategy == orig(this.board.tileStrategy)
+this.board.tileStrategy.getClass().getName() == orig(this.board.tileStrategy.getClass().getName())
+this.scanner == orig(this.scanner)
+ar.edu.unrc.game2048.MainCLI.$assertionsDisabled == orig(ar.edu.unrc.game2048.MainCLI.$assertionsDisabled)
+this.board.score == 168
+this.board.grid[orig(this.board.score)] has only one value
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy:::OBJECT
+this has only one value
+this.random has only one value
+this.random != null
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.RandomTileStrategy():::EXIT
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.RandomTileStrategy(java.util.Random):::ENTER
+random has only one value
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.RandomTileStrategy(java.util.Random):::EXIT
+this.random == orig(random)
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.determinarPosicion(java.util.Set):::ENTER
+posicionesVacias != null
+posicionesVacias.getClass().getName() == java.util.HashSet.class
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.determinarPosicion(java.util.Set):::EXIT
+this.random == orig(this.random)
+return != null
+return.row >= 0
+return.col >= 0
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.determinarValor():::ENTER
+===========================================================================
+ar.edu.unrc.game2048.RandomTileStrategy.determinarValor():::EXIT
+this.random == orig(this.random)
+return one of { 2, 4 }
+Exiting Daikon.
