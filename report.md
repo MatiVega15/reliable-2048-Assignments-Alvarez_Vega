@@ -1547,3 +1547,57 @@ La incorporación de las trazas de Randoop generó cambios profundos, divididos 
 ### *Conclusión de la iteración*
 
 La integración de Randoop demostró un **impacto de doble filo**. Por un lado, es una herramienta excelente para **inyectar aleatoriedad y descubrir valores límite a nivel de unidad**. Por el otro, confirmó que **la inferencia de invariantes dinámicos para lógicas de negocio secuenciales y profundas no puede depender de la aleatoriedad pura**. Sin una suite de pruebas guiada que explore estados avanzados del juego, la herramienta sigue siendo vulnerable a los falsos positivos por escasez de datos.
+
+## ***Fase 4.1: Comparación Daikon vs `repOk ()`***
+
+En el Assignment 2 **se escribieron manualmente los métodos `repOk ()` de las clases `Cell` y `Board`** para capturar el conocimiento humano sobre los estados válidos de los objetos. Al contrastar estas aserciones estáticas con la **salida inferida dinámicamente por Daikon**, se observa lo siguiente:
+
+- **¿Qué invariantes de `repOk ()` infirió Daikon?**
+
+     Daikon logró **redescubrir dinámicamente** casi todas las validaciones estructurales clave definidas manualmente.
+
+     En `Board`, detectó la **existencia y validez de la grilla** (`grid != null` y `grid [] elements != null`), la **correspondencia de dimensiones** para asegurar que la matriz es cuadrada (`this.size >= 0` y `this.size == size (this.grid [])`), el **límite inferior del puntaje** (`score >= 0`) y la **instanciación de la estrategia** (`tileStrategy != null`).
+
+     En la clase `Cell`, también detectó correctamente el **límite inferior del valor** (`value >= 0`).
+
+- **¿Qué omitió Daikon y por qué?**
+
+     Daikon no pudo inferir la validación recursiva y estricta de que **cada celda interna de `Board` debe cumplir individualmente con su propio `repOk ()`**, ni la regla lógica compuesta global de `Cell` que expresa que **el valor debe ser cero o una potencia de dos simultáneamente**.
+
+     Esto ocurre porque las plantillas de Daikon se basan en un **conjunto predefinido de propiedades matemáticas**. La herramienta no puede "inventar" ni inferir lógica de negocio condicional compleja (como expresiones con operadores lógicos `OR` y `AND`) ni bucles anidados que invoquen métodos auxiliares de validación.
+
+- **¿Infirió Daikon algún invariante nuevo, correcto y útil no incluido en `repOk ()`?**
+
+     Sí, Daikon aportó una dimensión completamente ausente en el `repOk ()`: **los invariantes transicionales y de pureza funcional**.
+
+     Mediante el uso de la cláusula `orig (...)`, Daikon demostró matemáticamente que métodos como `isEmpty ()`, `isFull ()` o `isLosingBoard ()` son funciones puras que **no mutan el estado del tablero** (`== orig (...)`).
+
+     Además, descubrió **relaciones transicionales muy valiosas** que podrían usarse en pruebas unitarias o incluso como aserciones de pre y post condiciones en las implementaciones de los métodos, como el crecimiento monótono del puntaje en los movimientos (`this.score >= orig (this.score)`) y la relación algebraica exacta de las celdas tras una fusión (`2 * this.value - return.value == 0`). 
+
+     El `repOk ()` no puede evaluar estas reglas porque **carece de "memoria"** sobre el estado previo del objeto. 
+
+## ***Fase 4.2: Comparación Daikon vs Oráculos de prueba manuales y automatizados***
+
+A lo largo de los cuatro Assignments, se interactuó con **diversas fuentes de oráculos**. A continuación, se contrastan sus enfoques, fortalezas y debilidades:
+
+| **Fuente** | **Cómo se producen los oráculos** | **Fortalezas** | **Debilidades** |
+| :---: | :---: | :---: | :---: |
+| ***Aserciones de pruebas manuales*** | Escritas a mano por el desarrollador. | Precisas y con alto significado funcional (lógica de negocio). | Requieren mucho esfuerzo humano y pueden omitir casos de borde. |
+| ***repOk ()*** | Escrito a mano por el desarrollador. | Reutilizable de forma global, se verifica constantemente. | Mismas limitaciones que las pruebas manuales (depende del diseño humano). |
+| ***Aserciones de regresión (Randoop)*** | Observadas a partir de una única ejecución aleatoria. | Completamente automáticas y rápidas de generar. | Frágiles (se rompen fácil), basadas en valores crudos y sin significado semántico. |
+| ***Aserciones evolutivas (EvoSuite)*** | Evolucionadas mediante algoritmos para maximizar la cobertura. | Automáticas, garantizan alta cobertura de ramas y mutantes. | Suelen ser oráculos del tipo "regresión", con secuencias difíciles de leer e interpretar. |
+| ***Invariantes de Daikon*** | Inferidos dinámicamente a partir de múltiples ejecuciones. | Generalizan reglas algebraicas y transicionales a través de las ejecuciones. | Dependen 100% de la calidad de las trazas aportadas y son muy propensos a arrojar invariantes espurios. |
+
+### *¿Qué enfoque produjo los oráculos más útiles para este programa?*
+
+Para un proyecto con una lógica de dominio tan estricta como 2048, la combinación de **oráculos manuales (`repOk ()` y pruebas unitarias)** demostró ser el enfoque fundamentalmente más útil y confiable para validar la base del juego.
+
+Esto se debe a que herramientas basadas en fuzzing y aleatoriedad sufren severas **limitaciones para explorar el espacio de estados profundo** (como alcanzar un "Game Over" o realizar fusiones masivas en tableros grandes), lo que provoca que los oráculos automáticos caigan en aserciones sobreajustadas o invariantes espurios.
+
+Sin embargo, Randoop, EvoSuite y Fuzzing son herramientas muy útiles para una primera evaluación de un proyecto, detectando rápidamente sin mucho esfuerzo los **errores más grotescos** que puedan existir, así como ciertos **casos bordes** o **situaciones extraordinarias** que un desarrollador podría pasar por alto. Luego de eso, se debe complementar con una buena suite de pruebas manuales, diseñadas y guiadas lógicamente y no aleatoriamente, con el objetivo de encontrar posibles errores más finos y discretos.
+
+Por otro lado, **Daikon demostró ser la herramienta complementaria de mayor valor analítico**. Una vez que se le proveen trazas de pruebas manuales robustas, Daikon es capaz de extraer relaciones algebraicas transicionales que el desarrollador rara vez escribe a mano por considerarlas abstractas (como la pureza de las funciones o la preservación incondicional de los atributos originales del tablero).
+
+En este sentido, Daikon brinda excelentes invariantes principalmente para **pre y post condiciones de métodos**, los cuales pueden ser agregados como aserciones dentro del código de implementación, activadas para detectar errores durante el desarrollo y desactivadas en producción. De esta manera, complementan el trabajo del `repOk ()` manual que no debería ser delegado a Daikon, pero sí podría estar inspirado en los resultados iniciales que esta herramienta arroje.
+
+En conclusión, **el ecosistema de testing ideal para un proyecto como 2048 resultó ser un diseño híbrido y escalonado**. La base innegociable debe ser siempre el **conocimiento humano**, expresado a través de pruebas manuales guiadas y aserciones estructurales fuertes (`repOk ()`). Sobre esta base sólida, herramientas exploratorias como **Randoop, EvoSuite y el Fuzzing** actúan como una línea de defensa vital y automatizada para estresar el sistema, maximizar la cobertura y descubrir casos límite imprevistos. Finalmente, **Daikon** corona el proceso siendo un auditor analítico excepcional, capaz de inferir reglas transicionales y algebraicas ocultas que perfeccionan el diseño sin intentar reemplazar, sino potenciar, la lógica dictada por el desarrollador.
