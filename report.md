@@ -1003,3 +1003,547 @@ java -cp lib/daikon.jar daikon.PrintInvariants daikon-traces/output.inv
 ```
 
 La ejecución confirmó la **correcta compilación** de los puntos de programa observados para las clases instrumentadas, dejando el entorno listo para la etapa de inspección y evaluación de invariantes.
+
+## ***Fase 3.1: Inspección y evaluación de los invariantes inferidos para la clase `Cell`***
+
+Para realizar el análisis, se seleccionaron los **principales métodos** de interés de la clase.
+
+### *1. Invariante de clase (`OBJECT` / `CLASS`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Cell:::CLASS
+ar.edu.unrc.game2048.Cell.EMPTY != null
+ar.edu.unrc.game2048.Cell.EMPTY.value == 0
+===========================================================================
+ar.edu.unrc.game2048.Cell:::OBJECT
+===========================================================================
+```
+
+- **Clasificación**: Correcto pero trivial / Limitación de la herramienta.
+- **¿Es correcto?** Lo inferido en `CLASS` es correcto, refleja el estado estático de la constante `EMPTY`. El bloque `OBJECT` vacío indica que Daikon no halló propiedades globales de instancia.
+- **¿Es útil?** No aporta gran valor. Lo útil es notar la incapacidad de Daikon para inferir un invariante global.
+- **¿Ya está expresado en otro lugar?** En `repOk ()`, se exige globalmente que `value >= 0` y que sea potencia de dos. Daikon, por el contrario, no logró generalizar este invariante de clase en `OBJECT`, pero sí lo infirió como postcondiciones de algunos métodos.
+- **¿Es demasiado fuerte?** No aplica. La herramienta no pudo construir un invariante de representación completo con los tests dados.
+
+### *2. Constructor `Cell (int)` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Cell.Cell(int):::ENTER
+value >= 0
+===========================================================================
+ar.edu.unrc.game2048.Cell.Cell(int):::EXIT
+this.value == orig(value)
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (con un invariante trivial en `EXIT`).
+- **¿Es correcto?** La precondición `value >= 0` es genuina y la postcondición `this.value == orig (value)` demuestra que la asignación de la variable al atributo se realiza correctamente y sin mutaciones previas.
+- **¿Es útil?** Absolutamente. Previene la instanciación de valores negativos, protegiendo la integridad de la ficha desde el momento de su creación.
+- **¿Ya está expresado en otro lugar?** Sí. Daikon redescubrió el límite inferior que está programado explícitamente tanto en el constructor (`if (value < 0)`) como en `repOk ()` (`value >= 0`). Además, el invariante `this.value >= Cell.EMPTY.value` es una deducción trivial, ya que `EMPTY.value` es 0, redundando con la validación anterior.
+- **¿Es demasiado fuerte?** No. Este grupo de invariantes aplica universalmente para toda celda válida (0 o bien cualquier potencia de 2 positiva) en cualquier etapa del juego.
+
+### *3. Método `isEmpty ()` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::ENTER
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+(this.value == 0)  <==>  (return == true)
+(this.value == 0)  <==>  (this.value == ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::EXIT;condition="return == true"
+this.value == ar.edu.unrc.game2048.Cell.EMPTY.value
+this.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value == 0
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Cell.isEmpty():::EXIT;condition="not(return == true)"
+this.value >= 2
+this.value is a power of 2
+return == false
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (con varias postcondiciones triviales/redundantes).
+- **¿Es correcto?** La equivalencia lógica (`(this.value == 0) <==> (return == true)`) es perfectamente correcta y refleja la línea `return value == 0;` del código fuente. Además, la deducción en el bloque condicional (`not (return == true)`) de que `this.value is a power of 2` y `this.value >= 2` capta matemáticamente las reglas del juego.
+- **¿Es útil?** Sí, en dos aspectos. Primero, valida sin errores la lógica de consulta de estado del método. Segundo, el invariante `this.value == orig (this.value)` garantiza que consultar si una celda está vacía no altera su valor (el método es puro y libre de efectos secundarios).
+- **¿Ya está expresado en otro lugar?** Sí. Daikon logró redescubrir la regla fundamental de validación implementada a mano en `repOk ()`, la cual exige que un valor no vacío sea obligatoriamente validado por `esPotenciaDeDos (value)`. También redescubrió que `value >= 0`.
+- **¿Es demasiado fuerte?** No. Si bien Daikon imprime mucho "ruido" comparando constantemente con la constante `EMPTY` y su valor original (lo cual es trivial y redundante), ninguna de estas afirmaciones restringe falsamente el dominio. Las reglas inferidas aplican al 100% de los casos de uso válidos de una celda no vacía en el juego.
+
+### *4. Método `mergeWith (Cell)` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Cell.mergeWith(ar.edu.unrc.game2048.Cell):::ENTER
+this.value == other.value
+this.value >= 2
+this.value is a power of 2
+other != null
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.mergeWith(ar.edu.unrc.game2048.Cell):::EXIT
+this.value == other.value
+this.value == orig(this.value)
+this.value == orig(other.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+this.value >= 2
+this.value is a power of 2
+return != null
+return.value is a power of 2
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+2 * this.value - return.value == 0
+this.value < return.value
+ar.edu.unrc.game2048.Cell.EMPTY.value < return.value
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (con deducciones triviales sobre constantes).
+- **¿Es correcto?** Sí. Refleja fielmente la lógica genuina del programa. Las precondiciones exigen que ambas celdas sean válidas (`>= 2`, potencias de 2), no nulas y con el mismo valor. En el `EXIT`, la expresión matemática `2 * this.value - return.value == 0` es la representación algebraica perfecta de la fusión.
+- **¿Es útil?** Es extremadamente útil. Este conjunto de invariantes capturó la esencia semántica completa del método. Además, `this.value == orig (this.value)` garantiza la inmutabilidad de la celda original.
+- **¿Ya está expresado en otro lugar?** Las precondiciones aisladas se validan a través de `canMergeWith ()` y excepciones en el código fuente. Sin embargo, la relación transicional (`2 * this.value - return.value == 0` y `this.value < return.value`) es un descubrimiento novedoso de Daikon, ya que el método `repOk ()` implementado en el Assignment 2 solamente evalúa el estado estático de la celda, no su evolución tras una operación.
+- **¿Es demasiado fuerte?** No. A pesar del extenso ruido visual generado por el seguimiento de la constante `EMPTY`, los invariantes lógicos inferidos son reglas universales estrictas de todo juego válido de 2048. Ninguna ejecución violaría estas restricciones.
+
+### *5. Método `getValue ()` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Cell.getValue():::ENTER
+this.value >= 0
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.getValue():::EXIT
+this.value == return
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+return == orig(this.value)
+return >= 0
+ar.edu.unrc.game2048.Cell.EMPTY.value <= return
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (con redundancias triviales sobre constantes).
+- **¿Es correcto?** Sí. Las equivalencias `this.value == return` y `return == orig (this.value)` describen con total exactitud el comportamiento de la instrucción `return value;` del código fuente.
+- **¿Es útil?** Sí. Garantiza estructualmente dos cosas fundamentales: que el método efectivamente retorna el estado interno de la celda, y que al hacerlo no altera dicho estado (es un método puro y de solo lectura que respeta la inmutabilidad de la clase).
+- **¿Ya está expresado en otro lugar?** La regla de que el valor (y por ende el retorno) es `>= 0` ya está controlada en el `repOk ()` y en el constructor. Sin embargo, el `repOk ()` no evalúa el comportamiento de los métodos de acceso (getters), por lo que esta garantía de inmutabilidad en la consulta es un aporte exclusivo de Daikon.
+- **¿Es demasiado fuerte?** No. Aunque Daikon introduce mucho "ruido" comparando el retorno con la constante `EMPTY` de forma redundante (`EMPTY.value <= return`), ninguna de estas reglas restringe el dominio. Cualquier celda válida en el juego devolverá siempre un valor mayor o igual a cero sin mutar el objeto original.
+
+### *6. Método `canMergeWith (Cell)` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::ENTER
+other != null
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT90
+this.value one of { 0, 2 }
+ar.edu.unrc.game2048.Cell.EMPTY has only one value
+other.value one of { 0, 2 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT90;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT92
+(return == false)  <==>  (this.value != other.value)
+(return == true)  <==>  (this.value == other.value)
+this.value >= 2
+this.value is a power of 2
+other.value >= 2
+other.value is a power of 2
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value < other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT92;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT92;condition="not(return == true)"
+this.value != other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT
+this.value == orig(this.value)
+ar.edu.unrc.game2048.Cell.EMPTY == orig(ar.edu.unrc.game2048.Cell.EMPTY)
+ar.edu.unrc.game2048.Cell.EMPTY.value == orig(ar.edu.unrc.game2048.Cell.EMPTY.value)
+other.value == orig(other.value)
+(return == true)  ==>  (ar.edu.unrc.game2048.Cell.EMPTY.value < other.value)
+(return == true)  ==>  (other.value >= 2)
+(return == true)  ==>  (other.value is a power of 2)
+(return == true)  ==>  (this.value == other.value)
+(return == true)  ==>  (this.value > ar.edu.unrc.game2048.Cell.EMPTY.value)
+(return == true)  ==>  (this.value >= 2)
+(return == true)  ==>  (this.value is a power of 2)
+this.value >= ar.edu.unrc.game2048.Cell.EMPTY.value
+ar.edu.unrc.game2048.Cell.EMPTY.value <= other.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT;condition="return == true"
+this.value == other.value
+this.value == orig(other.value)
+this.value >= 2
+this.value is a power of 2
+return == true
+this.value > ar.edu.unrc.game2048.Cell.EMPTY.value
+===========================================================================
+ar.edu.unrc.game2048.Cell.canMergeWith(ar.edu.unrc.game2048.Cell):::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (con invariante espurio en `EXIT92`).
+- **¿Es correcto?** Sí. En `ENTER`, garantiza que `other != null` ya que el código lanza una excepción de lo contrario. En `EXIT92` (cuando ninguna celda está vacía), deduce correctamente que para que se puedan fusionar (`return == true`), ambas celdas deben tener valores iguales, mayores o iguales a 2 y ser potencias de 2.
+- **¿Es útil?** Absolutamente. El bloque `EXIT` general resume la regla de compatibilidad estructural del juego con aserciones formales (`return == true ==> this.value == other.value`), garantizando además que la consulta no muta ninguna de las dos celdas evaluadas (`== orig`).
+- **¿Ya está expresado en otro lugar?** No. El `repOk ()` valida el estado de una sola celda a la vez (que sea `>= 0` y potencia de 2). No tiene forma de expresar la relación de compatibilidad y equivalencia cruzada entre dos objetos `Cell` distintos en tiempo de ejecución.
+- **¿Es demasiado fuerte?** El `EXIT90` presenta un invariante espurio por escasez de datos: afirma que `this.value one of { 0, 2 }` y `other.value one of { 0, 2 }`. Esto sucede porque en los tests analizados, la condición de falla por "celda vacía" se dio mayormente al principio del juego, cuando solo existían valores de 2. Sin embargo, el análisis global (`EXIT`) absorbe este caso y presenta las reglas lógicas correctas sin restricciones de dominio falsas.
+
+## ***Fase 3.2: Inspección y evaluación de los invariantes inferidos para la clase `Board`***
+
+Para realizar el análisis, se seleccionaron los **principales métodos** de interés de la clase.
+
+### *1. Invariante de clase (`OBJECT` / `CLASS`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Board:::CLASS
+===========================================================================
+ar.edu.unrc.game2048.Board:::OBJECT
+this.grid.getClass().getName() == ar.edu.unrc.game2048.Cell[][].class
+this.tileStrategy.getClass().getName() == ar.edu.unrc.game2048.RandomTileStrategy.class
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != size(this.grid[])-1
+ar.edu.unrc.game2048.Board.WINNING_VALUE > this.size
+ar.edu.unrc.game2048.Board.WINNING_VALUE > this.score
+ar.edu.unrc.game2048.Board.WINNING_VALUE > size(this.grid[])
+this.size >= size(this.grid[])
+this.grid.getClass().getName() != this.tileStrategy.getClass().getName()
+===========================================================================
+```
+
+- **Clasificación**: Mezcla de "Correcto pero trivial" e "Incorrecto".
+- **¿Es correcto?** Las validaciones de tipos (`this.grid.getClass ().getName () == ar.edu.unrc.game2048.Cell [] [].class`) y `this.size >= size(this.grid [])` son estructuralmente correctas. Sin embargo, afirmar que el score es menor al valor ganador (`WINNING_VALUE > this.score`) es incorrecto respecto al dominio, y fijar la estrategia a `RandomTileStrategy` (`this.tileStrategy.getClass ().getName () == ar.edu.unrc.game2048.RandomTileStrategy.class`) es un artefacto de los tests.
+- **¿Es útil?** La mayoría de estos invariantes aportan muy poco valor real. Las aserciones sobre clases son redundantes en Java y la relación `this.size >= size (this.grid [])` es más débil que la igualdad estricta esperada.
+- **¿Ya está expresado en otro lugar?** Hay discrepancias notables con el `repOk ()`, el cual exige explícitamente `grid.length == size` (igualdad estricta) y `score >= 0`. Daikon solo pudo deducir una desigualdad (`>=`) para la grilla y falló completamente en inferir el límite inferior del puntaje a nivel global de objeto.
+- **¿Es demasiado fuerte?** Sí, en dos aspectos críticos. Primero, el constructor de `Board` permite inyectar cualquier implementación de `TileStrategy`; obligar a que sea `RandomTileStrategy` violaría ejecuciones válidas con estrategias deterministas para testing. Segundo, `WINNING_VALUE > this.score` es falso: en una partida real, el puntaje acumulado puede superar ampliamente los 2048 puntos, pero las trazas provistas por pruebas aleatorias cortas nunca lograron alcanzar esos valores, sesgando la inferencia.
+
+### *2. Constructor `Board (int)` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(int):::ENTER
+===========================================================================
+ar.edu.unrc.game2048.Board.Board(int):::EXIT
+this.size == orig(size)
+this.size == size(this.grid[])
+this.grid != null
+this.grid[] elements != null
+this.score == 0
+this.tileStrategy != null
+this.score <= size(this.grid[])-1
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (con una relación espuria al final).
+- **¿Es correcto?** Sí. Garantiza la asignación de la variable (`this.size == orig (size)`), inicializa el puntaje (`this.score == 0`) e instancia correctamente las dependencias (`grid`, las filas internas de la matriz y `tileStrategy`), todo de acuerdo con las líneas del constructor en el código fuente.
+- **¿Es útil?** Sumamente útil. Confirma que la instanciación de un objeto `Board` deja la memoria en un estado seguro, sin referencias nulas colgantes y listo para procesar movimientos.
+- **¿Ya está expresado en otro lugar?** Sí. Daikon logró redescubrir de forma brillante casi todas las validaciones estructurales del método `repOk ()`. Identificó que el tamaño de la matriz debe coincidir (`grid.length == size`), que no debe haber nulos (`grid != null, grid [] elements != null`) y que la estrategia debe estar definida (`tileStrategy != null`).
+- **¿Es demasiado fuerte?** El invariante `this.score <= size (this.grid []) - 1` es espurio. Aparece como una coincidencia matemática (dado que el score inicial es 0 y el tamaño en las pruebas es de 2, 3 o 4), pero carece de sentido en el dominio del juego. Adicionalmente, Daikon falló en detectar la precondición genuina en el `ENTER` (`size > 0` que lanza excepción en el código), lo cual evidencia una limitación si las pruebas no abarcaron casos con tamaños negativos.
+
+### *3. Método `setCell (int, int, Cell)` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Board.setCell(int, int, ar.edu.unrc.game2048.Cell):::ENTER
+this.grid != null
+this.score one of { 0, 4 }
+row >= 0
+col >= 0
+cell != null
+cell.value >= 0
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > row
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE > col
+row <= size(this.grid[])-1
+col <= size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.setCell(int, int, ar.edu.unrc.game2048.Cell):::EXIT
+this.size == orig(this.size)
+this.grid == orig(this.grid)
+this.score == orig(this.score)
+cell.value == orig(cell.value)
+this.score one of { 0, 4 }
+orig(row) <= size(this.grid[])-1
+orig(col) <= size(this.grid[])-1
+===========================================================================
+```
+
+> (*Nota*: Se omitieron para la lectura las líneas redundantes comparando contra `EMPTY`, `WINNING_VALUE` y repeticiones de los invariantes de objeto estructurales, dejando las reglas específicas de los parámetros y el estado del método).
+
+- **Clasificación**: Correcto y útil (con precondiciones y postcondiciones de estado espurias).
+- **¿Es correcto?** Sí. En el `ENTER`, Daikon capturó perfectamente las precondiciones exigidas por el método auxiliar `validatePosition (row, col)` : `row >= 0`, `col >= 0`, `row <= size (this.grid []) - 1` y `col <= size (this.grid []) - 1`. También detectó la aserción explícita de que `cell != null`. En el `EXIT`, determinó correctamente que setear una celda muta el contenido de la matriz, pero no reasigna la matriz en sí (`this.grid == orig (this.grid)`), ni altera el puntaje (`this.score == orig (this.score)`) ni el tamaño del tablero (`this.size == orig (this.size)`).
+- **¿Es útil?** Absolutamente. Es la comprobación matemática de que el método inyecta una ficha respetando los límites de la matriz (evitando `IndexOutOfBoundsException`) y aislando los demás atributos del juego (efectos secundarios nulos sobre `score` o `size`).
+- **¿Ya está expresado en otro lugar?** El chequeo de `cell != null` y los límites de la matriz se evalúan de forma estática sobre todo el tablero en el `repOk ()`. Sin embargo, Daikon descubre las reglas protectoras antes de que el objeto ingrese a la estructura de datos (precondiciones del parámetro).
+- **¿Es demasiado fuerte?** Sí, tanto en el `ENTER` como en el `EXIT`, se presentan invariantes demasiado fuertes por escasez de datos. Se afirma que `this.score one of { 0, 4 }` y `DEFAULT_SIZE > row` (que asume que la fila debe ser menor a 4, tamaño por defecto). Esto revela que las pruebas unitarias utilizan `setCell` casi exclusivamente al inicio de la partida y sobre tableros estándar de 4x4 o inferior. En el juego real, `setCell` puede usarse con el score de miles de puntos y en tableros de dimensiones variadas.
+
+### *4. Método `isLosingBoard ()` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT241
+this.size one of { 2, 4 }
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT241;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT250
+this.size one of { 2, 3 }
+this.score == 0
+return == false
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT250;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT254
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == false
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT254;condition="not(return == true)"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT258
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT258;condition="return == true"
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (this.size one of { 2, 3, 4 })
+(return == true)  ==>  (orig(this) has only one value)
+(return == true)  ==>  (orig(this.grid[post(this.score)]) has only one value)
+(return == true)  ==>  (orig(this.grid[this.score]) has only one value)
+(return == true)  ==>  (this.grid has only one value)
+(return == true)  ==>  (this.grid[] contains no nulls and has only one value, of length 2)
+(return == true)  ==>  (this.grid[orig(this.score)] has only one value)
+(return == true)  ==>  (this.grid[this.score] has only one value)
+(return == true)  ==>  (this.grid[this.size-1] has only one value)
+(return == true)  ==>  (this.score == 0)
+(return == true)  ==>  (this.size == 2)
+(return == true)  ==>  (this.tileStrategy has only one value)
+this.size one of { 2, 3, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT;condition="return == true"
+this.size == 2
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.score == 0
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isLosingBoard():::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (por demostrar pureza) / Totalmente espurio (en las condiciones de derrota).
+- **¿Es correcto?** A nivel estructural, es correcto. Daikon deduce en los puntos de salida (ej. `EXIT241` correspondiente al código `if (hasEmptyCells ()) { return false }`; y `EXIT258` correspondiente al final del método `return true;`) que el método no muta el estado del objeto. Todos los atributos permanecen idénticos a su estado original (`this.score == orig (this.score)`, etc.).
+- **¿Es útil?** La comprobación de inmutabilidad (`== orig (...)`) es muy útil. Garantiza que verificar si el jugador perdió la partida no altera el tablero ni el puntaje (es un método de consulta pura).
+- **¿Ya está expresado en otro lugar?** Las precondiciones del `ENTER` (`score >= 0`, `grid != null`) son las mismas que valida el `repOk ()` globalmente. Sin embargo, la garantía de que el método no produce efectos secundarios no está cubierta por `repOk ()` y es un aporte valioso de Daikon.
+- **¿Es demasiado fuerte?** Es un gran ejemplo de invariantes demasiado fuertes o espurios debido a pruebas limitadas. En la sección `condition = "return true"` o en las implicaciones `(return == true) ==> ...`, Daikon afirma que solo se puede perder si el tablero es de 2x2 (`this.size == 2`) y el puntaje es 0 (`this.score == 0`). Esto revela que, en los tests unitarios, los pocos casos de derrota fueron escenarios artificialmente preparados con un mini tablero de 2x2 lleno de piezas sin posibilidad de fusión y con puntaje 0. Una partida estándar violaría inmediatamente este invariante. Además, Daikon hace muchas asumpciones de que ciertos campos toman apenas un conjunto de pocos valores debido a que no detecta otros en los tests.
+
+### *5. Método `isFull ()` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::ENTER
+this.size == size(this.grid[])
+this.size == 2
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.score == orig(this.score)
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == true)  ==>  (orig(this) has only one value)
+(return == true)  ==>  (this.grid has only one value)
+(return == true)  ==>  (this.grid[] contains no nulls and has only one value, of length 2)
+(return == true)  ==>  (this.grid[this.score] has only one value)
+(return == true)  ==>  (this.grid[this.size-1] has only one value)
+(return == true)  ==>  (this.tileStrategy has only one value)
+this.size == 2
+this.score == 0
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::EXIT;condition="return == true"
+this.grid has only one value
+this.grid[] contains no nulls and has only one value, of length 2
+this.tileStrategy has only one value
+return == true
+orig(this) has only one value
+this.grid[this.size-1] has only one value
+this.grid[this.score] has only one value
+===========================================================================
+ar.edu.unrc.game2048.Board.isFull():::EXIT;condition="not(return == true)"
+return == false
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (por demostrar pureza) / Totalmente espurio (por escasez extrema de datos).
+- **¿Es correcto?** Estructuralmente, las aserciones de inmutabilidad (`== orig (...)`) son correctas; el método solo consulta el estado delegando en `!hasEmptyCells ()` sin modificar nada. Sin embargo, afirmar globalmente que `this.size == 2` y `this.score == 0` es falso para el dominio del juego.
+- **¿Es útil?** La comprobación de pureza (métodos sin efectos secundarios) es arquitectónicamente útil. Las restricciones de tamaño y puntaje, por el contrario, son inútiles y causarían fallos si se usaran como aserciones en producción.
+- **¿Ya está expresado en otro lugar?** El chequeo de `this.size == size (this.grid [])` si está cubierto globalmente en el `repOk ()`. La pureza del método y que los atributos conserven su estado original no se evalúa en `repOk ()`.
+- **¿Es demasiado fuerte?** Es excesivamente fuerte y revela la imposibilidad de buenas inferencias con la suite dada. En el bloque `ENTER`, Daikon afirma que cada vez que se llama a este método, el tablero era de 2x2 y el score era 0. A diferencia de `isLosingBoard` (donde el fuzzer aportó tableros de más tamaño), acá el fuzzer jamás invocó `isFull ()`. Cualquier ejecución en una partida real normal violaría este invariante inmediatamente.
+
+### *6. Método `moveUp ()` (`ENTER` - `EXIT`)*
+
+```text
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::ENTER
+this.size == size(this.grid[])
+this.size one of { 2, 4 }
+this.grid != null
+this.grid[] elements != null
+this.score >= 0
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE != this.score
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+this.size != this.score
+this.score != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::EXIT
+this.size == orig(this.size)
+this.size == size(this.grid[])
+this.size == orig(size(this.grid[]))
+this.grid == orig(this.grid)
+this.grid.getClass().getName() == orig(this.grid.getClass().getName())
+this.grid[] == orig(this.grid[])
+this.tileStrategy == orig(this.tileStrategy)
+this.tileStrategy.getClass().getName() == orig(this.tileStrategy.getClass().getName())
+(return == false)  ==>  (orig(this.score) one of { 0, 136 })
+(return == false)  ==>  (this.score == orig(this.score))
+(return == false)  ==>  (this.score one of { 0, 136 })
+this.size one of { 2, 4 }
+this.grid != null
+this.grid[] elements != null
+this.tileStrategy != null
+ar.edu.unrc.game2048.Board.DEFAULT_SIZE >= this.size
+this.score % ar.edu.unrc.game2048.Board.DEFAULT_SIZE == 0
+this.score % this.size == 0
+orig(this.score) % this.size == 0
+this.size != orig(this.score)
+this.score >= orig(this.score)
+this.score != size(this.grid[])-1
+orig(this.score) != size(this.grid[])-1
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::EXIT;condition="return == true"
+return == true
+===========================================================================
+ar.edu.unrc.game2048.Board.moveUp():::EXIT;condition="not(return == true)"
+this.score == orig(this.score)
+this.score one of { 0, 136 }
+return == false
+===========================================================================
+```
+
+- **Clasificación**: Correcto y útil (en sus propiedades transicionales) / Demasiado fuerte y espurio (en los valores absolutos del score y size).
+- **¿Es correcto?** Sí. En el `EXIT`, Daikon descubre que el tablero mantiene su estructura intacta (la referencia a la matriz, su tamaño y la estrategia no cambian: `== orig (...)`). Luego, capta la regla dorada del método: el puntaje nunca decrece (`this.score >= orig (this.score)`). Además, demuestra que si el movimiento falla o no altera el tablero (`return == false`), el puntaje no sufre modificaciones (`this.score == orig (this.score)`).
+- **¿Es útil?** Absolutamente vital. Este invariante es una prueba matemática de que la lógica de acumulación de puntos (`score += mergedCell.getValue ()`) funciona siempre en forma monótonamente creciente. Si un error en el código provocara que el jugador perdiera puntos al moverse, este invariante atraparía el bug al instante.
+- **¿Ya está expresado en otro lugar?** No. El método `repOk ()` solo verifica el estado estático afirmando que `score >= 0`. No tiene capacidad para evaluar la relación transicional del estado, es decir, garantizar que `score_final >= score_inicial` luego de un intento de movimiento. Daikon complementa perfectamente a `repOk ()` en este sentido.
+- **¿Es demasiado fuerte?** Sí, en dos aspectos muy marcados, producto de las trazas limitadas. En primer lugar, el invariante afirma que `this.size one of { 2, 4 }` en el `ENTER`. Esto demuestra que ni las pruebas manuales ni el fuzzer lograron ejecutar `moveUp ()` en un tablero de 3x3 (o cualquier otro tamaño válido > 0). En segundo lugar, en el bloque condicional donde `return == false`, Daikon sentencia que `this.score one of { 0, 136 }`, Esto revela un claro sobreajuste (overfitting): en las trazas generadas, las únicas veces que el tablero no pudo moverse hacia arriba fue al inicio de la partida (score 0) o en una partida específica que se trabó exactamente en los 136 puntos. En una partida real, un intento válido de movimiento hacia arriba puede ocurrir con cualquier puntaje.
+
+## ***Fase 3.3: Iteración ampliada con pruebas generadas por Randoop***
+
+Con el objetivo de intentar eliminar las limitaciones detectadas en las pruebas manuales y evaluar cómo reacciona Daikon ante un espacio de estados más diverso, se reejecutó el análisis dinámico incorporando **523 casos de prueba automáticos generados por Randoop** (`randoopTestsConRepOk.RegressionTest`). El comando utilizado fue:
+
+```bash
+java -cp "lib/daikon.jar:target/classes:target/test-classes:$(mvn dependency:build-classpath -q -DforceStdout)" \
+     daikon.Chicory \
+     --ppt-select-pattern="ar.edu.unrc.game2048.Board|ar.edu.unrc.game2048.Cell" \
+     --dtrace-file=daikon-traces/randoop.dtrace.gz \
+     org.junit.runner.JUnitCore \
+     ar.edu.unrc.game2048.BoardTest \
+     ar.edu.unrc.game2048.CellTest \
+     randoopTestsConRepOk.RegressionTest
+```
+
+Posteriormente, se procesó el **archivo binario** `output-randoop.inv` resultante con Daikon para generar el nuevo **reporte de texto** [`daikon-output-randoop.txt`](daikon-output-randoop.txt):
+
+```bash
+java -cp "lib/daikon.jar:target/classes" daikon.Daikon \
+     daikon-traces/randoop.dtrace.gz \
+     -o daikon-traces/output-randoop.inv \
+     > daikon-output-randoop.txt
+```
+
+> *Nota*: El archivo de trazas generado (`randoop.dtrace.gz`) alcanzó un peso de 200 MB, superando el límite de GitHub de 100 MB por archivo. Por tal motivo, dicho archivo no se encuentra versionado en el repositorio.
+
+### *Análisis de resultados: cambios respecto de las fases 3.1 y 3.2*
+
+La incorporación de las trazas de Randoop generó cambios profundos, divididos entre aciertos notables en unidades aisladas y una clara evidencia de las limitaciones de las pruebas aleatorias en estructuras complejas:
+
+- **Acierto en casos de borde (`Cell`)**: Randoop logró instanciar y probar celdas con el valor mínimo `1` (`this.value one of { 1, 2 }`). Matemáticamente, $1 = 2^0$, por lo que cumple con la validación de bits de `esPotenciaDeDos ()`. Las pruebas manuales originales y el fuzzer nunca contemplaron fichas con valor 1, debido a que naturalmente el juego 2048 comienza con fichas mínimas de valor 2 o 4. Esto demuestra la utilidad de Randoop para descubrir casos límite numéricos inesperados.
+- **Degradación en ecuaciones relacionales (`Cell.mergeWith` y `Cell.canMergeWith`)**: Inesperadamente, la relación algebraica descubierta anteriormente (`2 * this.value - return.value == 0`) desapareció en este reporte. Al introducir pruebas puramente aleatorias, Randoop casi no ejecutó fusiones exitosas con fichas grandes. La escasez de datos en escenarios de celdas avanzadas provocó que Daikon "olvidara" la regla general y la redujera a rangos numéricos simples.
+- **Flexibilidad en la estrategia de fichas (`TileStrategy`)**: En los análisis anteriores, Daikon había inferido restrictivamente que la estrategia del tablero debía ser obligatoriamente `RandomTileStrategy` en lo que respecta a la clase `Board`. Con la inclusión de Randoop y la ejecución de pruebas sobre los constructores alternativos que permiten inyectar la estrategia determinística `DeterministicTileStrategy` (`Board (int, TileStrategy)`), esta aserción espuria desapareció del estado global (`OBJECT`), demostrando que el diseño del tablero es desacoplado y admite cualquier implementación de la interfaz `TileStrategy`.
+- **Persistencia del sobreajuste en estados profundos (`Board`)**: Los invariantes espurios más graves, como la restricción en `isLosingBoard ()` que afirma que solo se puede perder en un tablero de 2x2 con score 0, se mantuvieron intactos o con invariantes espurios similares en la mayoría de los métodos evaluados. Esto deja en evidencia que ni siquiera las pruebas aleatorias son capaces de alcanzar estados de juego complejos con secuencias lógicas precisas de decenas de movimientos.
+
+### *Conclusión de la iteración*
+
+La integración de Randoop demostró un **impacto de doble filo**. Por un lado, es una herramienta excelente para **inyectar aleatoriedad y descubrir valores límite a nivel de unidad**. Por el otro, confirmó que **la inferencia de invariantes dinámicos para lógicas de negocio secuenciales y profundas no puede depender de la aleatoriedad pura**. Sin una suite de pruebas guiada que explore estados avanzados del juego, la herramienta sigue siendo vulnerable a los falsos positivos por escasez de datos.
